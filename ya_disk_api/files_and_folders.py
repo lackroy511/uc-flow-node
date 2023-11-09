@@ -4,7 +4,7 @@ from typing import Any, Dict
 from uc_http_requester.requester import Request
 
 
-class YaDiskApi:
+class FilesAndFolders:
     
     class RequestType:
         UPLOAD_TO_DISK = 'upload'

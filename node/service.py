@@ -9,8 +9,9 @@ from uc_flow_schemas.flow import NodeType as BaseNodeType
 from uc_flow_schemas.flow import OptionValue, Property, RunState
 from uc_http_requester.requester import Request
 
-from api.ya_disk_api import YaDiskApi
-from node.enums import MediaTypes, Operations, Params, PreviewSizes
+from ya_disk_api.files_and_folders import FilesAndFolders
+from node.enums import MediaTypes, FilesAndFoldersOperations, \
+    Params, PreviewSizes, Resources
 from node.node_type import NodeType
 from util.dict_formatter import form_dict_to_request
 
@@ -25,22 +26,29 @@ class ExecuteView(execute.Execute):
         properties = json.node.data.properties
         try:
             ya_disk_token = properties['api_token']
-            operation = properties['operation']
-            ya_disk_api = YaDiskApi(ya_disk_token)
+            resource = properties['resource']
             
-            if operation == Operations.upload_file:
-                download_link: str = properties['download_link']
-                file_name: str = properties['file_name']
-                
-                response = await ya_disk_api.upload_from_inet_to_disk(
-                    download_link, file_name)
-                await json.save_result({'result': response})
-            
-            if operation == Operations.get_flat_list:
+            if resource == Resources.user_disk:
+                operation = properties['user_disk_operations']
                 params = form_dict_to_request(properties['params'])
-                flat_list = await ya_disk_api.get_flat_list(params)
+                
+            if resource == Resources.files_and_folders:
+                operation = properties['files_and_folders_operations']
+                ya_disk_api = FilesAndFolders(ya_disk_token)
+                
+                if operation == FilesAndFoldersOperations.upload_file:
+                    download_link: str = properties['download_link']
+                    file_name: str = properties['file_name']
+                    
+                    response = await ya_disk_api.upload_from_inet_to_disk(
+                        download_link, file_name)
+                    await json.save_result({'result': response})
+                
+                if operation == FilesAndFoldersOperations.get_flat_list:
+                    params = form_dict_to_request(properties['params'])
+                    flat_list = await ya_disk_api.get_flat_list(params)
 
-                await json.save_result({'result': flat_list})
+                    await json.save_result({'result': flat_list})
             
             json.state = RunState.complete
                 

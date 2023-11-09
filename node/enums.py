@@ -6,7 +6,11 @@ class Resources(str, Enum):
     files_and_folders = 'Files and folders'
 
 
-class Operations(str, Enum):
+class UserDiskOptions(str, Enum):
+    get_meta_info = 'get_meta_info'
+
+
+class FilesAndFoldersOperations(str, Enum):
     upload_file = 'upload_file'
     get_flat_list = 'get_flat_list'
 
