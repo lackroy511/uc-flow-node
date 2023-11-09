@@ -1,8 +1,7 @@
-from uc_http_requester.requester import Request
-
+import json
 from typing import Any, Dict
 
-import json
+from uc_http_requester.requester import Request
 
 
 class YaDiskApi:
@@ -21,7 +20,7 @@ class YaDiskApi:
         self.base_headers: Dict[str, str] = {
             'Authorization': f'OAuth {self.access_token}',
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }
  
     async def upload_from_inet_to_disk(

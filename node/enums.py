@@ -1,6 +1,11 @@
 from enum import Enum
 
 
+class Resources(str, Enum):
+    user_disk = 'User disk'
+    files_and_folders = 'Files and folders'
+
+
 class Operations(str, Enum):
     upload_file = 'upload_file'
     get_flat_list = 'get_flat_list'
