@@ -21,10 +21,10 @@ from util.dict_formatter import form_dict_to_request
 class NodeType(flow.NodeType):
     id: str = 'd0654eef-83eb-484f-9275-bdd0f8ca7ae4'
     type: flow.NodeType.Type = flow.NodeType.Type.action
-    name: str = 'yandex_disk'
-    displayName: str = 'yandex_disk'
+    name: str = 'my_service'
+    displayName: str = 'my_service'
     icon: str = '<svg><text x="8" y="50" font-size="50">🦥</text></svg>'
-    description: str = 'yandex_disk'
+    description: str = 'my_service'
     properties: List[Property] = [
         Property(
             displayName='API token',
