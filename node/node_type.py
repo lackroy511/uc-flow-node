@@ -5,7 +5,7 @@ from uc_flow_schemas.flow import CredentialProtocol, Defaults, DisplayOptions
 from uc_flow_schemas.flow import NodeType as BaseNodeType
 from uc_flow_schemas.flow import OptionValue, Property, RunState
 
-from node.enums import DelFileOrFolderParams, MediaTypes, \
+from node.enums import DelFileOrFolderParams, GetMetaInfoParams, MediaTypes, \
     FilesAndFoldersOperations, Params, \
     PreviewSizes, Resources, UserDiskOptions
 from node.properties.params_for_flat_list import \
@@ -114,6 +114,11 @@ class NodeType(flow.NodeType):
                     name='Upload file',
                     value=FilesAndFoldersOperations.upload_file,
                 ),
+                OptionValue(
+                    name='Get meta info',
+                    value=FilesAndFoldersOperations.get_meta_info,
+                ),
+                
                 OptionValue(
                     name='Get flat list',
                     value=FilesAndFoldersOperations.get_flat_list,
@@ -226,6 +231,160 @@ class NodeType(flow.NodeType):
             ),
         ),
         
+        # files and folders\get meta info
+        Property(
+            displayName='Path',
+            name='get_meta_info_path',
+            type=Property.Type.STRING,
+            required=True,
+            description='Путь к файлу или каталогу',
+            default='',
+            placeholder='folder/file.txt',
+            displayOptions=DisplayOptions(
+                show={
+                    'resource': [
+                        Resources.files_and_folders,
+                    ],
+                    'files_and_folders_operations': [
+                        FilesAndFoldersOperations.get_meta_info,
+                    ],
+                },
+            ),
+        ),
+        Property(
+            displayName='Params',
+            name='get_meta_info_params',
+            type=Property.Type.COLLECTION,
+            options=[
+                Property(
+                    displayName='Fields',
+                    name=GetMetaInfoParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    values=[
+                        Property(
+                            displayName='Fields',
+                            name=GetMetaInfoParams.fields,
+                            type=Property.Type.STRING,
+                            default='',
+                            placeholder='Список полей в ответе',
+                        ),
+                    ],
+                ),
+                Property(
+                    displayName='Limit',
+                    name=GetMetaInfoParams.limit,
+                    type=Property.Type.NUMBER,
+                    default=20,
+                    values=[
+                        Property(
+                            displayName='Limit',
+                            name=GetMetaInfoParams.limit,
+                            type=Property.Type.NUMBER,
+                            default='',
+                            placeholder='Количество ресурсов в ответе',
+                        ),
+                    ],
+                ),
+                Property(
+                    displayName='Offset',
+                    name=GetMetaInfoParams.offset,
+                    type=Property.Type.NUMBER,
+                    default='',
+                    values=[
+                        Property(
+                            displayName='Offset',
+                            name=GetMetaInfoParams.offset,
+                            type=Property.Type.NUMBER,
+                            default='',
+                            placeholder='Количество ресурсов с начала списка',
+                        ),
+                    ],
+                ),
+                Property(
+                    displayName='Preview size',
+                    name=GetMetaInfoParams.preview_size,
+                    type=Property.Type.OPTIONS,
+                    default='',
+                    values=[
+                        Property(
+                            displayName='Preview size',
+                            name=GetMetaInfoParams.preview_size,
+                            type=Property.Type.OPTIONS,
+                            default='',
+                            placeholder='Размер уменьшенного изображения',
+                            options=[
+                                OptionValue(
+                                    name=PreviewSizes.S_SIZE,
+                                    value=PreviewSizes.S_SIZE,
+                                ),
+                                OptionValue(
+                                    name=PreviewSizes.M_SIZE,
+                                    value=PreviewSizes.M_SIZE,
+                                ),
+                                OptionValue(
+                                    name=PreviewSizes.L_SIZE,
+                                    value=PreviewSizes.L_SIZE,
+                                ),
+                                OptionValue(
+                                    name=PreviewSizes.XL_SIZE,
+                                    value=PreviewSizes.XL_SIZE,
+                                ),
+                                OptionValue(
+                                    name=PreviewSizes.XXL_SIZE,
+                                    value=PreviewSizes.XXL_SIZE,
+                                ),
+                                OptionValue(
+                                    name=PreviewSizes.XXXL_SIZE,
+                                    value=PreviewSizes.XXXL_SIZE,
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                Property(
+                    displayName='Preview crop',
+                    name=GetMetaInfoParams.preview_crop,
+                    type=Property.Type.BOOLEAN,
+                    default='',
+                    values=[
+                        Property(
+                            displayName='Preview crop',
+                            name=GetMetaInfoParams.preview_crop,
+                            type=Property.Type.BOOLEAN,
+                            default='',
+                            placeholder='Обрезать превью согласно размеру',
+                        ),
+                    ],
+                ),
+                Property(
+                    displayName='Sort by',
+                    name=GetMetaInfoParams.sort,
+                    type=Property.Type.STRING,
+                    default='',
+                    values=[
+                        Property(
+                            displayName='Sort by',
+                            name=GetMetaInfoParams.sort,
+                            type=Property.Type.STRING,
+                            default='',
+                            placeholder='name,path,created,modified,size ',
+                        ),
+                    ],
+                ),
+            ],
+            displayOptions=DisplayOptions(
+                show={
+                    'files_and_folders_operations': [
+                        FilesAndFoldersOperations.get_meta_info,
+                    ],
+                    'resource': [
+                        Resources.files_and_folders,
+                    ],
+                },
+            ),
+        ),
+
         # files and folders\upload file
         Property(
             displayName='Download link',

@@ -36,6 +36,21 @@ class FilesAndFolders:
         )
         return await delete.execute()
     
+    async def get_meta_info(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}'   
+        
+        meta_info: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await meta_info.execute()
+
+        return response.json()
+        
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,

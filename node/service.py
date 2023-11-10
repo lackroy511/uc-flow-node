@@ -55,7 +55,18 @@ class ExecuteView(execute.Execute):
                         await json.save_result({'message': 'success'})
                     else:
                         await json.save_result(response.json())
+                
+                if operation == FilesAndFoldersOperations.get_meta_info:
+                    path = properties['get_meta_info_path']
+                    params = form_dict_to_request(
+                        properties['get_meta_info_params'])
+                    params['path'] = path
+
+                    response = await files_and_folders.get_meta_info(
+                        params)
                     
+                    await json.save_result(response)
+                
                 if operation == FilesAndFoldersOperations.upload_file:
                     download_link: str = properties['download_link']
                     file_name: str = properties['file_name']
