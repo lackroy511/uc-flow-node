@@ -22,7 +22,20 @@ class FilesAndFolders:
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         }
- 
+    
+    async def del_file_or_folder(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}'   
+        
+        delete: Request = Request(
+            url=api_url,
+            method=Request.Method.delete,
+            headers=self.base_headers,
+            params=params,
+        )
+        return await delete.execute()
+    
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,

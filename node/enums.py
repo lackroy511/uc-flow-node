@@ -11,6 +11,7 @@ class UserDiskOptions(str, Enum):
 
 
 class FilesAndFoldersOperations(str, Enum):
+    del_file_or_folder = 'del_file_or_folder'
     upload_file = 'upload_file'
     get_flat_list = 'get_flat_list'
 
@@ -37,7 +38,15 @@ class MediaTypes(str, Enum):
     web = 'web'
 
 
-class Params:
+class DelFileOrFolderParams(str, Enum):
+    path = 'path'
+    permanently = 'permanently'
+    fields = 'fields'
+    force_async = 'force_async'
+    md5 = 'md5'
+
+
+class Params(str, Enum):
     limit = 'limit'
     media_type = 'media_type'
     offset = 'offset'
@@ -46,7 +55,7 @@ class Params:
     preview_crop = 'preview_crop'
     
 
-class PreviewSizes:
+class PreviewSizes(str, Enum):
     S_SIZE = 'S'
     M_SIZE = 'M'
     L_SIZE = 'L'
