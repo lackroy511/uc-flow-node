@@ -78,7 +78,16 @@ class ExecuteView(execute.Execute):
                         params=params, body=body,
                     )
                     await json.save_result(response)
+                
+                if operation == FilesAndFoldersOperations.create_folder:
+                    path = properties['create_folder_path']
+                    params = form_dict_to_request(
+                        properties['create_folder_params'])
+                    params['path'] = path
                     
+                    response = await files_and_folders.create_folder(params)
+                    await json.save_result(response)
+                 
                 if operation == FilesAndFoldersOperations.upload_file:
                     download_link: str = properties['download_link']
                     file_name: str = properties['file_name']

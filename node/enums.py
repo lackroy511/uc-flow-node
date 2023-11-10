@@ -15,6 +15,7 @@ class FilesAndFoldersOperations(str, Enum):
     upload_file = 'upload_file'
     get_meta_info = 'get_meta_info'
     update_meta_info = 'update_meta_info'
+    create_folder = 'create_folder'
     
     get_flat_list = 'get_flat_list'
     
@@ -61,7 +62,11 @@ class GetMetaInfoParams(str, Enum):
 
 class UpdateMetaInfoParams(str, Enum):
     fields = 'fields' 
-    
+
+
+class CreateFolderParams(str, Enum):
+    fields = 'fields' 
+ 
     
 class Params(str, Enum):
     limit = 'limit'
