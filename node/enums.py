@@ -14,6 +14,7 @@ class FilesAndFoldersOperations(str, Enum):
     del_file_or_folder = 'del_file_or_folder'
     upload_file = 'upload_file'
     get_meta_info = 'get_meta_info'
+    update_meta_info = 'update_meta_info'
     
     get_flat_list = 'get_flat_list'
     
@@ -56,6 +57,10 @@ class GetMetaInfoParams(str, Enum):
     preview_crop = 'preview_crop'
     preview_size = 'preview_size'
     sort = 'sort'
+
+
+class UpdateMetaInfoParams(str, Enum):
+    fields = 'fields' 
     
     
 class Params(str, Enum):

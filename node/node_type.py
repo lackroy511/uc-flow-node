@@ -7,7 +7,7 @@ from uc_flow_schemas.flow import OptionValue, Property, RunState
 
 from node.enums import DelFileOrFolderParams, GetMetaInfoParams, MediaTypes, \
     FilesAndFoldersOperations, Params, \
-    PreviewSizes, Resources, UserDiskOptions
+    PreviewSizes, Resources, UpdateMetaInfoParams, UserDiskOptions
 from node.properties.params_for_flat_list import \
     property_with_params_for_get_flat_list
 
@@ -117,6 +117,10 @@ class NodeType(flow.NodeType):
                 OptionValue(
                     name='Get meta info',
                     value=FilesAndFoldersOperations.get_meta_info,
+                ),
+                OptionValue(
+                    name='Update meta info',
+                    value=FilesAndFoldersOperations.update_meta_info,
                 ),
                 
                 OptionValue(
@@ -384,7 +388,81 @@ class NodeType(flow.NodeType):
                 },
             ),
         ),
-
+        
+        # files and folders\update meta info
+        Property(
+            displayName='Path',
+            name='update_meta_info_path',
+            type=Property.Type.STRING,
+            required=True,
+            description='Путь к файлу или каталогу',
+            default='',
+            placeholder='folder/file.txt',
+            displayOptions=DisplayOptions(
+                show={
+                    'resource': [
+                        Resources.files_and_folders,
+                    ],
+                    'files_and_folders_operations': [
+                        FilesAndFoldersOperations.update_meta_info,
+                    ],
+                },
+            ),
+        ),
+        Property(
+            displayName='Body',
+            name='body',
+            type=Property.Type.JSON,
+            required=True,
+            description='Добавляемые атрибуты к свойствам объекта JSON.',
+            default={
+                'custom_properties': {'fields': 'values'},
+            },
+            placeholder='Новые свойства в JSON формате',
+            displayOptions=DisplayOptions(
+                show={
+                    'resource': [
+                        Resources.files_and_folders,
+                    ],
+                    'files_and_folders_operations': [
+                        FilesAndFoldersOperations.update_meta_info,
+                    ],
+                },
+            ),
+        ),
+        Property(
+            displayName='Params',
+            name='update_meta_info_params',
+            type=Property.Type.COLLECTION,
+            options=[
+                Property(
+                    displayName='Fields',
+                    name=UpdateMetaInfoParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    values=[
+                        Property(
+                            displayName='Fields',
+                            name=UpdateMetaInfoParams.fields,
+                            type=Property.Type.STRING,
+                            default='',
+                            placeholder='Список полей в ответе',
+                        ),
+                    ],
+                ),
+            ],
+            displayOptions=DisplayOptions(
+                show={
+                    'resource': [
+                        Resources.files_and_folders,
+                    ],
+                    'files_and_folders_operations': [
+                        FilesAndFoldersOperations.update_meta_info,
+                    ],
+                },
+            ),
+        ),
+        
         # files and folders\upload file
         Property(
             displayName='Download link',

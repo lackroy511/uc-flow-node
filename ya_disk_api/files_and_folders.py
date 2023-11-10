@@ -50,7 +50,25 @@ class FilesAndFolders:
         response = await meta_info.execute()
 
         return response.json()
+    
+    async def update_meta_info(
+            self, 
+            params: Dict[str, Any], 
+            body: Dict[str, str]) -> Dict[str, Any]:
         
+        api_url: str = f'{self.BASE_URL}'   
+        
+        meta_info: Request = Request(
+            url=api_url,
+            method=Request.Method.patch,
+            headers=self.base_headers,
+            params=params,
+            data=json.dumps(body),
+        )
+        response = await meta_info.execute()
+
+        return response.json()
+    
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,
