@@ -9,8 +9,22 @@ from node.enums import CreateFolderParams, DelFileOrFolderParams, \
     GetMetaInfoParams, MediaTypes, \
     FilesAndFoldersOperations, Params, \
     PreviewSizes, Resources, UpdateMetaInfoParams, UserDiskOptions
-from node.properties.params_for_flat_list import \
-    property_with_params_for_get_flat_list
+
+from node.properties.params import property_get_flat_list_params, \
+    property_user_disk_params, property_delete_params, \
+    property_get_meta_info_params, property_update_meta_info_params, \
+    property_create_folder_params
+
+from node.properties.operations import property_user_disk_operations, \
+    property_files_and_folders_operations
+
+
+from node.properties.paths import property_path_to_delete, \
+    property_get_meta_info_path, property_update_meta_info_path, \
+    property_create_folder_path
+    
+from node.properties.unique import property_body, property_download_link, \
+    property_file_name
 
 
 class NodeType(flow.NodeType):
@@ -48,518 +62,34 @@ class NodeType(flow.NodeType):
         ),
         
         # user disk
-        Property(
-            displayName='Operations',
-            name='user_disk_operations',
-            type=Property.Type.OPTIONS,
-            noDataExpression=True,
-            options=[
-                OptionValue(
-                    name='Get meta information',
-                    value=UserDiskOptions.get_meta_info,
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.user_disk,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='Params',
-            name='user_disk_params',
-            type=Property.Type.COLLECTION,
-            options=[
-                Property(
-                    displayName='Fields',
-                    name=Params.fields,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Fields',
-                            name=Params.fields,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='Список полей в ответе',
-                        ),
-                    ],
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.user_disk,
-                    ],
-                    'user_disk_operations': [
-                        UserDiskOptions.get_meta_info,
-                    ],
-                },
-            ),
-        ),
+        property_user_disk_operations,
+        # user disk\get meta info
+        property_user_disk_params,
         
         # files and folders\operations
-        Property(
-            displayName='Operation',
-            name='files_and_folders_operations',
-            type=Property.Type.OPTIONS,
-            noDataExpression=True,
-            options=[
-                OptionValue(
-                    name='Delete file or folder',
-                    value=FilesAndFoldersOperations.del_file_or_folder,
-                ),
-                OptionValue(
-                    name='Upload file',
-                    value=FilesAndFoldersOperations.upload_file,
-                ),
-                OptionValue(
-                    name='Get meta info',
-                    value=FilesAndFoldersOperations.get_meta_info,
-                ),
-                OptionValue(
-                    name='Update meta info',
-                    value=FilesAndFoldersOperations.update_meta_info,
-                ),
-                OptionValue(
-                    name='Create folder',
-                    value=FilesAndFoldersOperations.create_folder,
-                ),
-                
-                OptionValue(
-                    name='Get flat list',
-                    value=FilesAndFoldersOperations.get_flat_list,
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                },
-            ),
-        ),
-        
+        property_files_and_folders_operations,
+
         # files and folders\delete file or folder
-        Property(
-            displayName='Path',
-            name='path_to_delete',
-            type=Property.Type.STRING,
-            required=True,
-            description='Путь к файлу или каталогу',
-            default='',
-            placeholder='folder/file.txt',
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.del_file_or_folder,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='Params',
-            name='delete_params',
-            type=Property.Type.COLLECTION,
-            options=[
-                Property(
-                    displayName='Permanently',
-                    name=DelFileOrFolderParams.permanently,
-                    type=Property.Type.BOOLEAN,
-                    default=False,
-                    values=[
-                        Property(
-                            displayName='Permanently',
-                            name=DelFileOrFolderParams.permanently,
-                            type=Property.Type.BOOLEAN,
-                            default=False,
-                            placeholder='признак безвозвратного удаления',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Fields',
-                    name=DelFileOrFolderParams.fields,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Fields',
-                            name=DelFileOrFolderParams.fields,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='Список полей в ответе',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Force async',
-                    name=DelFileOrFolderParams.force_async,
-                    type=Property.Type.BOOLEAN,
-                    default=False,
-                    values=[
-                        Property(
-                            displayName='Force async',
-                            name=DelFileOrFolderParams.force_async,
-                            type=Property.Type.BOOLEAN,
-                            default=False,
-                            placeholder='Выполнить асинхронно.',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='md5',
-                    name=DelFileOrFolderParams.md5,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='md5',
-                            name=DelFileOrFolderParams.md5,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='md5 удаляемого файла.',
-                        ),
-                    ],
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.del_file_or_folder,
-                    ],
-                },
-            ),
-        ),
+        property_path_to_delete,
+        property_delete_params,
         
         # files and folders\get meta info
-        Property(
-            displayName='Path',
-            name='get_meta_info_path',
-            type=Property.Type.STRING,
-            required=True,
-            description='Путь к файлу или каталогу',
-            default='',
-            placeholder='folder/file.txt',
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.get_meta_info,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='Params',
-            name='get_meta_info_params',
-            type=Property.Type.COLLECTION,
-            options=[
-                Property(
-                    displayName='Fields',
-                    name=GetMetaInfoParams.fields,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Fields',
-                            name=GetMetaInfoParams.fields,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='Список полей в ответе',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Limit',
-                    name=GetMetaInfoParams.limit,
-                    type=Property.Type.NUMBER,
-                    default=20,
-                    values=[
-                        Property(
-                            displayName='Limit',
-                            name=GetMetaInfoParams.limit,
-                            type=Property.Type.NUMBER,
-                            default='',
-                            placeholder='Количество ресурсов в ответе',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Offset',
-                    name=GetMetaInfoParams.offset,
-                    type=Property.Type.NUMBER,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Offset',
-                            name=GetMetaInfoParams.offset,
-                            type=Property.Type.NUMBER,
-                            default='',
-                            placeholder='Количество ресурсов с начала списка',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Preview size',
-                    name=GetMetaInfoParams.preview_size,
-                    type=Property.Type.OPTIONS,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Preview size',
-                            name=GetMetaInfoParams.preview_size,
-                            type=Property.Type.OPTIONS,
-                            default='',
-                            placeholder='Размер уменьшенного изображения',
-                            options=[
-                                OptionValue(
-                                    name=PreviewSizes.S_SIZE,
-                                    value=PreviewSizes.S_SIZE,
-                                ),
-                                OptionValue(
-                                    name=PreviewSizes.M_SIZE,
-                                    value=PreviewSizes.M_SIZE,
-                                ),
-                                OptionValue(
-                                    name=PreviewSizes.L_SIZE,
-                                    value=PreviewSizes.L_SIZE,
-                                ),
-                                OptionValue(
-                                    name=PreviewSizes.XL_SIZE,
-                                    value=PreviewSizes.XL_SIZE,
-                                ),
-                                OptionValue(
-                                    name=PreviewSizes.XXL_SIZE,
-                                    value=PreviewSizes.XXL_SIZE,
-                                ),
-                                OptionValue(
-                                    name=PreviewSizes.XXXL_SIZE,
-                                    value=PreviewSizes.XXXL_SIZE,
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Preview crop',
-                    name=GetMetaInfoParams.preview_crop,
-                    type=Property.Type.BOOLEAN,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Preview crop',
-                            name=GetMetaInfoParams.preview_crop,
-                            type=Property.Type.BOOLEAN,
-                            default='',
-                            placeholder='Обрезать превью согласно размеру',
-                        ),
-                    ],
-                ),
-                Property(
-                    displayName='Sort by',
-                    name=GetMetaInfoParams.sort,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Sort by',
-                            name=GetMetaInfoParams.sort,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='name,path,created,modified,size ',
-                        ),
-                    ],
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.get_meta_info,
-                    ],
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                },
-            ),
-        ),
+        property_get_meta_info_path,
+        property_get_meta_info_params,
         
         # files and folders\update meta info
-        Property(
-            displayName='Path',
-            name='update_meta_info_path',
-            type=Property.Type.STRING,
-            required=True,
-            description='Путь к файлу или каталогу',
-            default='',
-            placeholder='folder/file.txt',
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.update_meta_info,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='Body',
-            name='body',
-            type=Property.Type.JSON,
-            required=True,
-            description='Добавляемые атрибуты к свойствам объекта JSON.',
-            default={
-                'custom_properties': {'fields': 'values'},
-            },
-            placeholder='Новые свойства в JSON формате',
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.update_meta_info,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='Params',
-            name='update_meta_info_params',
-            type=Property.Type.COLLECTION,
-            options=[
-                Property(
-                    displayName='Fields',
-                    name=UpdateMetaInfoParams.fields,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Fields',
-                            name=UpdateMetaInfoParams.fields,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='Список полей в ответе',
-                        ),
-                    ],
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.update_meta_info,
-                    ],
-                },
-            ),
-        ),
+        property_update_meta_info_path,
+        property_body,
+        property_update_meta_info_params,
         
         # files and folders\create folder
-        Property(
-            displayName='Path',
-            name='create_folder_path',
-            type=Property.Type.STRING,
-            required=True,
-            description='Путь к файлу или каталогу',
-            default='',
-            placeholder='folder/file.txt',
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.create_folder,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='Params',
-            name='create_folder_params',
-            type=Property.Type.COLLECTION,
-            options=[
-                Property(
-                    displayName='Fields',
-                    name=CreateFolderParams.fields,
-                    type=Property.Type.STRING,
-                    default='',
-                    values=[
-                        Property(
-                            displayName='Fields',
-                            name=CreateFolderParams.fields,
-                            type=Property.Type.STRING,
-                            default='',
-                            placeholder='Список полей в ответе',
-                        ),
-                    ],
-                ),
-            ],
-            displayOptions=DisplayOptions(
-                show={
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.create_folder,
-                    ],
-                },
-            ),
-        ),
+        property_create_folder_path,
+        property_create_folder_params,
         
         # files and folders\upload file
-        Property(
-            displayName='Download link',
-            name='download_link',
-            type=Property.Type.STRING,
-            required=True,
-            default='',
-            description='Ссылка для скачивания файла',
-            displayOptions=DisplayOptions(
-                show={
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.upload_file,
-                    ],
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                },
-            ),
-        ),
-        Property(
-            displayName='File_name',
-            name='file_name',
-            type=Property.Type.STRING,
-            required=True,
-            default='',
-            description='Имя файла',
-            displayOptions=DisplayOptions(
-                show={
-                    'files_and_folders_operations': [
-                        FilesAndFoldersOperations.upload_file,
-                    ],
-                    'resource': [
-                        Resources.files_and_folders,
-                    ],
-                },
-            ),
-        ),
+        property_download_link,
+        property_file_name,
         
         # files and folders\get flat list
-        property_with_params_for_get_flat_list,
-        
+        property_get_flat_list_params,
     ]

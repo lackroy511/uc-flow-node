@@ -98,7 +98,8 @@ class ExecuteView(execute.Execute):
                     await json.save_result(response)
                 
                 if operation == FilesAndFoldersOperations.get_flat_list:
-                    params = form_dict_to_request(properties['params'])
+                    params = form_dict_to_request(
+                        properties['get_flat_list_params'])
                     flat_list = await files_and_folders.get_flat_list(params)
 
                     await json.save_result(flat_list)
