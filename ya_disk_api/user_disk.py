@@ -2,6 +2,9 @@
 from typing import Any, Dict
 
 from uc_http_requester.requester import Request
+from uc_flow_nodes.schemas import NodeRunContext
+from node.enums import UserDiskOptions
+from util.dict_formatter import form_dict_to_request
 
 
 class UserDisk:
@@ -32,3 +35,29 @@ class UserDisk:
         response = await flat_list.execute()
         
         return response.json()
+
+
+class UserDiskProcess:
+    
+    def __init__(
+            self, 
+            operation: str, 
+            user_disk: UserDisk, 
+            properties: Dict[str, Any],
+            json: NodeRunContext,
+            ) -> None:
+        
+        self.json: NodeRunContext = json
+        self.operation = operation
+        self.user_disk = user_disk
+        self.properties = properties
+        
+    async def execute(self):
+        if self.operation == UserDiskOptions.get_meta_info:
+            await self.__get_meta_info()
+    
+    async def __get_meta_info(self):
+        params = form_dict_to_request(self.properties['user_disk_params'])
+        meta_info = await self.user_disk.get_meta_info(params)
+        
+        await self.json.save_result(meta_info)

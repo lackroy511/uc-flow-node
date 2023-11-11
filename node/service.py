@@ -10,12 +10,13 @@ from uc_flow_schemas.flow import OptionValue, Property, RunState
 from uc_http_requester.requester import Request
 from util.path_encoder import encode_path_to_url_format
 
-from ya_disk_api.files_and_folders import FilesAndFolders
+from ya_disk_api.files_and_folders import FilesAndFolders, \
+    FilesAndFoldersProcess
 from node.enums import MediaTypes, FilesAndFoldersOperations, \
-    Params, PreviewSizes, Resources
+    Params, PreviewSizes, Resources, UserDiskOptions
 from node.node_type import NodeType
 from util.dict_formatter import form_dict_to_request
-from ya_disk_api.user_disk import UserDisk
+from ya_disk_api.user_disk import UserDisk, UserDiskProcess
 
 
 class InfoView(info.Info):
@@ -33,77 +34,19 @@ class ExecuteView(execute.Execute):
             if resource == Resources.user_disk:
                 user_disk = UserDisk(ya_disk_token)
                 operation = properties['user_disk_operations']
-                params = form_dict_to_request(properties['user_disk_params'])
                 
-                meta_info = await user_disk.get_meta_info(params)
-                
-                await json.save_result(meta_info)
+                process = UserDiskProcess(
+                    operation, user_disk, properties, json)
+                await process.execute()
                 
             if resource == Resources.files_and_folders:
-                operation = properties['files_and_folders_operations']
                 files_and_folders = FilesAndFolders(ya_disk_token)
+                operation = properties['files_and_folders_operations']
                 
-                if operation == FilesAndFoldersOperations.del_file_or_folder:
-                    path = properties['path_to_delete']
-                    params = form_dict_to_request(properties['delete_params'])
-                    params['path'] = path
-                    
-                    response = await files_and_folders.del_file_or_folder(
-                        params)
-                    
-                    if response.status_code == 204:
-                        await json.save_result({'message': 'success'})
-                    else:
-                        await json.save_result(response.json())
+                process = FilesAndFoldersProcess(
+                    operation, files_and_folders, properties, json)
+                await process.execute()
                 
-                if operation == FilesAndFoldersOperations.get_meta_info:
-                    path = properties['get_meta_info_path']
-                    params = form_dict_to_request(
-                        properties['get_meta_info_params'])
-                    params['path'] = path
-
-                    response = await files_and_folders.get_meta_info(
-                        params)
-                    
-                    await json.save_result(response)
-                
-                if operation == FilesAndFoldersOperations.update_meta_info:
-                    path = properties['update_meta_info_path']
-                    params = form_dict_to_request(
-                        properties['update_meta_info_params'])
-                    params['path'] = path
-                    body = properties['body']
-                    
-                    response = await files_and_folders.update_meta_info(
-                        params=params, body=body,
-                    )
-                    await json.save_result(response)
-                
-                if operation == FilesAndFoldersOperations.create_folder:
-                    path = properties['create_folder_path']
-                    params = form_dict_to_request(
-                        properties['create_folder_params'])
-                    params['path'] = path
-                    
-                    response = await files_and_folders.create_folder(params)
-                    await json.save_result(response)
-                 
-                if operation == FilesAndFoldersOperations.upload_file:
-                    download_link: str = properties['download_link']
-                    file_name: str = properties['file_name']
-                    
-                    response = \
-                        await files_and_folders.upload_from_inet_to_disk(
-                            download_link, file_name)
-                    await json.save_result(response)
-                
-                if operation == FilesAndFoldersOperations.get_flat_list:
-                    params = form_dict_to_request(
-                        properties['get_flat_list_params'])
-                    flat_list = await files_and_folders.get_flat_list(params)
-
-                    await json.save_result(flat_list)
-            
             json.state = RunState.complete
                 
         except Exception as e:
