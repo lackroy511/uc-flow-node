@@ -1,6 +1,7 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import CreateFolderParams, DelFileOrFolderParams, \
+from node.enums import CopyFileOrFolderParams, CreateFolderParams, \
+    DelFileOrFolderParams, \
     GetMetaInfoParams, MediaTypes, \
     FilesAndFoldersOperations, Params, \
     PreviewSizes, Resources, UpdateMetaInfoParams, UserDiskOptions
@@ -523,6 +524,69 @@ property_get_flat_list_params = Property(
             ],
             'resource': [
                 Resources.files_and_folders,
+            ],
+        },
+    ),
+)
+
+property_copy_file_or_folder_params = Property(
+    displayName='Params',
+    name='copy_file_or_folder_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=CopyFileOrFolderParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=CopyFileOrFolderParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Force Async',
+            name=CopyFileOrFolderParams.force_async,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Force Async',
+                    name=CopyFileOrFolderParams.force_async,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Список возвращаемых атрибутов.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Overwrite',
+            name=CopyFileOrFolderParams.overwrite,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Overwrite',
+                    name=CopyFileOrFolderParams.overwrite,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Список возвращаемых атрибутов.',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.copy_file_or_folder,
             ],
         },
     ),

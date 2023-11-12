@@ -13,7 +13,7 @@ from node.enums import CreateFolderParams, DelFileOrFolderParams, \
 from node.properties.params import property_get_flat_list_params, \
     property_user_disk_params, property_delete_params, \
     property_get_meta_info_params, property_update_meta_info_params, \
-    property_create_folder_params
+    property_create_folder_params, property_copy_file_or_folder_params
 
 from node.properties.operations import property_user_disk_operations, \
     property_files_and_folders_operations
@@ -21,7 +21,8 @@ from node.properties.operations import property_user_disk_operations, \
 
 from node.properties.paths import property_path_to_delete, \
     property_get_meta_info_path, property_update_meta_info_path, \
-    property_create_folder_path
+    property_create_folder_path, property_copy_from_path, \
+    property_copy_to_path
     
 from node.properties.unique import property_body, property_download_link, \
     property_file_name
@@ -85,6 +86,11 @@ class NodeType(flow.NodeType):
         # files and folders\create folder
         property_create_folder_path,
         property_create_folder_params,
+        
+        # files and folders\copy file or folder
+        property_copy_from_path,
+        property_copy_to_path,
+        property_copy_file_or_folder_params,
         
         # files and folders\upload file
         property_download_link,

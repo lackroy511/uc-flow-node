@@ -14,6 +14,7 @@ class FilesAndFolders:
     class RequestType:
         UPLOAD_TO_DISK = 'upload'
         GET_FLAT_LIST = 'files'
+        COPY_FILE_OR_FOLDER = 'copy'
     
     BASE_URL = 'https://cloud-api.yandex.net/v1/disk/resources/'
     BASE_DIR_OF_DISK = 'disk:/'
@@ -89,6 +90,21 @@ class FilesAndFolders:
 
         return response.json()
     
+    async def copy_file_or_folder(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.COPY_FILE_OR_FOLDER}'      
+        
+        create_folder: Request = Request(
+            url=api_url,
+            method=Request.Method.post,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await create_folder.execute()
+
+        return response.json()
+    
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,
@@ -153,7 +169,10 @@ class FilesAndFoldersProcess:
         
         if self.operation == FilesAndFoldersOperations.create_folder:
             await self.__create_folder()
-            
+        
+        if self.operation == FilesAndFoldersOperations.copy_file_or_folder:
+            await self.__copy_file_or_folder()
+        
         if self.operation == FilesAndFoldersOperations.upload_file:
             await self.__upload_file()
         
@@ -207,6 +226,18 @@ class FilesAndFoldersProcess:
         params['path'] = path
         
         response = await self.files_and_folders.create_folder(params)
+        await self.json.save_result(response)
+    
+    async def __copy_file_or_folder(self) -> None:
+        
+        path_from = self.properties['copy_from_path']
+        path_to = self.properties['copy_to_path']
+        params = form_dict_to_request(
+            self.properties['copy_file_or_folder_params'])
+        params['from'] = path_from
+        params['path'] = path_to
+        
+        response = await self.files_and_folders.copy_file_or_folder(params)
         await self.json.save_result(response)
     
     async def __upload_file(self) -> None:

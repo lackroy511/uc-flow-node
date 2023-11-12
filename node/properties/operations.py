@@ -48,6 +48,11 @@ property_files_and_folders_operations = Property(
             name='Create folder',
             value=FilesAndFoldersOperations.create_folder,
         ),
+        OptionValue(
+            name='Copy file or folder',
+            value=FilesAndFoldersOperations.copy_file_or_folder,
+        ),
+        
         
         OptionValue(
             name='Get flat list',

@@ -16,6 +16,7 @@ class FilesAndFoldersOperations(str, Enum):
     get_meta_info = 'get_meta_info'
     update_meta_info = 'update_meta_info'
     create_folder = 'create_folder'
+    copy_file_or_folder = 'copy_file_or_folder'
     
     get_flat_list = 'get_flat_list'
     
@@ -66,8 +67,14 @@ class UpdateMetaInfoParams(str, Enum):
 
 class CreateFolderParams(str, Enum):
     fields = 'fields' 
- 
-    
+
+
+class CopyFileOrFolderParams(str, Enum):
+    fields = 'fields'
+    force_async = 'force_async'
+    overwrite = 'overwrite'
+
+
 class Params(str, Enum):
     limit = 'limit'
     media_type = 'media_type'
