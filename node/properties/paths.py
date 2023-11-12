@@ -181,3 +181,43 @@ property_move_to_path = Property(
         },
     ),
 )
+
+property_publish_resource_path = Property(
+    displayName='Path',
+    name='publish_resource_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к публикуемому ресурсу.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.publish_resource,
+            ],
+        },
+    ),
+)
+
+property_unpublish_resource_path = Property(
+    displayName='Path',
+    name='unpublish_resource_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к ресурсу.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.unpublish_resource,
+            ],
+        },
+    ),
+)

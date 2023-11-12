@@ -21,7 +21,8 @@ class FilesAndFoldersOperations(str, Enum):
     get_flat_list_ordered_by_date = 'get_flat_list_ordered_by_date'
     move_file_or_folder = 'move_file_or_folder'
     get_public_resource_list = 'get_public_resource_list'
-    
+    publish_resource = 'publish_resource'
+    unpublish_resource = 'unpublish_resource'
     upload_file = 'upload_file'
 
 

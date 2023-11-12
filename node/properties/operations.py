@@ -68,6 +68,14 @@ property_files_and_folders_operations = Property(
             name='Get public resource list',
             value=FilesAndFoldersOperations.get_public_resource_list,
         ),
+        OptionValue(
+            name='Publish resource',
+            value=FilesAndFoldersOperations.publish_resource,
+        ),
+        OptionValue(
+            name='Unpublish resource',
+            value=FilesAndFoldersOperations.unpublish_resource,
+        ),
         
         OptionValue(
             name='Upload file',

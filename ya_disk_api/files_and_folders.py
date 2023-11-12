@@ -20,6 +20,8 @@ class FilesAndFolders:
         GET_FLAT_LIST_ORDER_BY_DATE = 'last-uploaded'
         MOVE_FILE_OR_FOLDER = 'move'
         GET_PUBLIC_RESOURCE_LIST = 'public'
+        PUBLISH_RESOURCE = 'publish'
+        UNPUBLISH_RESOURCE = 'unpublish'
     
     BASE_URL = 'https://cloud-api.yandex.net/v1/disk/resources/'
     BASE_DIR_OF_DISK = 'disk:/'
@@ -100,13 +102,13 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.COPY_FILE_OR_FOLDER}'      
         
-        create_folder: Request = Request(
+        copy: Request = Request(
             url=api_url,
             method=Request.Method.post,
             headers=self.base_headers,
             params=params,
         )
-        response = await create_folder.execute()
+        response = await copy.execute()
 
         return response.json()
     
@@ -115,13 +117,13 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FILE_IN_BASE64}'      
         
-        create_folder: Request = Request(
+        get_file: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await create_folder.execute()
+        response = await get_file.execute()
 
         return response.json()
     
@@ -161,13 +163,13 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.MOVE_FILE_OR_FOLDER}'      
         
-        create_folder: Request = Request(
+        move_file: Request = Request(
             url=api_url,
             method=Request.Method.post,
             headers=self.base_headers,
             params=params,
         )
-        response = await create_folder.execute()
+        response = await move_file.execute()
 
         return response.json()
     
@@ -177,14 +179,44 @@ class FilesAndFolders:
         api_url: str = f'{self.BASE_URL}' + \
                        f'{self.RequestType.GET_PUBLIC_RESOURCE_LIST}'   
         
-        flat_list: Request = Request(
+        public_resource_list: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await flat_list.execute()
+        response = await public_resource_list.execute()
         
+        return response.json()
+    
+    async def publish_resource(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.PUBLISH_RESOURCE}'      
+        
+        publish: Request = Request(
+            url=api_url,
+            method=Request.Method.put,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await publish.execute()
+
+        return response.json()
+    
+    async def unpublish_resource(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.UNPUBLISH_RESOURCE}'      
+        
+        unpublish: Request = Request(
+            url=api_url,
+            method=Request.Method.put,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await unpublish.execute()
+
         return response.json()
     
     async def upload_from_inet_to_disk(
@@ -256,6 +288,12 @@ class FilesAndFoldersProcess:
         if self.operation == \
                 FilesAndFoldersOperations.get_public_resource_list:
             await self.__get_public_resource_list()
+        
+        if self.operation == FilesAndFoldersOperations.publish_resource:
+            await self.__publish_resource()
+        
+        if self.operation == FilesAndFoldersOperations.unpublish_resource:
+            await self.__unpublish_resource()
         
         if self.operation == FilesAndFoldersOperations.upload_file:
             await self.__upload_file()
@@ -376,6 +414,26 @@ class FilesAndFoldersProcess:
         )
 
         await self.json.save_result(flat_list)
+    
+    async def __publish_resource(self) -> None:
+        
+        path = self.properties['publish_resource_path']
+        params = form_dict_to_request(
+            self.properties['publish_resource_params'])
+        params['path'] = path
+        
+        response = await self.files_and_folders.publish_resource(params)
+        await self.json.save_result(response)
+        
+    async def __unpublish_resource(self) -> None:
+        
+        path = self.properties['unpublish_resource_path']
+        params = form_dict_to_request(
+            self.properties['unpublish_resource_params'])
+        params['path'] = path
+        
+        response = await self.files_and_folders.unpublish_resource(params)
+        await self.json.save_result(response)
     
     async def __upload_file(self) -> None:
         
