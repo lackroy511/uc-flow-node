@@ -12,15 +12,16 @@ class UserDiskOptions(str, Enum):
 
 class FilesAndFoldersOperations(str, Enum):
     del_file_or_folder = 'del_file_or_folder'
-    upload_file = 'upload_file'
     get_meta_info = 'get_meta_info'
     update_meta_info = 'update_meta_info'
     create_folder = 'create_folder'
     copy_file_or_folder = 'copy_file_or_folder'
     get_file_in_base64 = 'get_file_in_base64'
-    
     get_flat_list = 'get_flat_list'
+    get_flat_list_ordered_by_date = 'get_flat_list_ordered_by_date'
     
+    upload_file = 'upload_file'
+
 
 class MediaTypes(str, Enum):
     audio = 'audio'

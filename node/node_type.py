@@ -14,7 +14,8 @@ from node.properties.params import property_get_flat_list_params, \
     property_user_disk_params, property_delete_params, \
     property_get_meta_info_params, property_update_meta_info_params, \
     property_create_folder_params, property_copy_file_or_folder_params, \
-    property_get_file_in_base64_params
+    property_get_file_in_base64_params, \
+    property_get_flat_list_ordered_by_date_params
 
 from node.properties.operations import property_user_disk_operations, \
     property_files_and_folders_operations
@@ -93,14 +94,19 @@ class NodeType(flow.NodeType):
         property_copy_to_path,
         property_copy_file_or_folder_params,
         
-        # files and folders\get the file download link
+        # files and folders\get the file in base64
         property_get_file_in_base64_path,
         property_get_file_in_base64_params,
+        
+        # files and folders\get flat list
+        property_get_flat_list_params,
+        
+        # files and folders\get flat list ordered by download date
+        property_get_flat_list_ordered_by_date_params,
         
         # files and folders\upload file
         property_download_link,
         property_file_name,
         
-        # files and folders\get flat list
-        property_get_flat_list_params,
+        
     ]

@@ -17,6 +17,7 @@ class FilesAndFolders:
         GET_FLAT_LIST = 'files'
         COPY_FILE_OR_FOLDER = 'copy'
         GET_FILE_IN_BASE64 = 'download'
+        GET_FLAT_LIST_ORDER_BY_DATE = 'last-uploaded'
     
     BASE_URL = 'https://cloud-api.yandex.net/v1/disk/resources/'
     BASE_DIR_OF_DISK = 'disk:/'
@@ -122,6 +123,37 @@ class FilesAndFolders:
 
         return response.json()
     
+    async def get_flat_list(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FLAT_LIST}'   
+        
+        flat_list: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await flat_list.execute()
+        
+        return response.json()
+    
+    async def get_flat_list_ordered_by_date(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}' + \
+                       f'{self.RequestType.GET_FLAT_LIST_ORDER_BY_DATE}'   
+        
+        flat_list: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await flat_list.execute()
+        
+        return response.json()
+    
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,
@@ -140,21 +172,6 @@ class FilesAndFolders:
             params=params,
         )
         response = await upload_file.execute()
-        
-        return response.json()
-
-    async def get_flat_list(
-            self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FLAT_LIST}'   
-        
-        flat_list: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
-            params=params,
-        )
-        response = await flat_list.execute()
         
         return response.json()
 
@@ -193,11 +210,15 @@ class FilesAndFoldersProcess:
         if self.operation == FilesAndFoldersOperations.get_file_in_base64:
             await self.__get_file_in_base64()
         
-        if self.operation == FilesAndFoldersOperations.upload_file:
-            await self.__upload_file()
-        
         if self.operation == FilesAndFoldersOperations.get_flat_list:
             await self.__get_flat_list()
+        
+        if self.operation == \
+                FilesAndFoldersOperations.get_flat_list_ordered_by_date:
+            await self.__get_flat_list_ordered_by_date()
+        
+        if self.operation == FilesAndFoldersOperations.upload_file:
+            await self.__upload_file()
     
     async def __del_file_or_folder(self) -> None:
         
@@ -276,6 +297,24 @@ class FilesAndFoldersProcess:
         else:
             await self.json.save_result(response)
     
+    async def __get_flat_list(self) -> None:
+        
+        params = form_dict_to_request(
+            self.properties['get_flat_list_params'])
+        flat_list = await self.files_and_folders.get_flat_list(params)
+
+        await self.json.save_result(flat_list)
+        
+    async def __get_flat_list_ordered_by_date(self) -> None:
+        
+        params = form_dict_to_request(
+            self.properties['get_flat_list_ordered_by_date_params'])
+        flat_list = await self.files_and_folders.get_flat_list_ordered_by_date(
+            params,
+        )
+
+        await self.json.save_result(flat_list)
+    
     async def __upload_file(self) -> None:
         
         download_link: str = self.properties['download_link']
@@ -285,11 +324,3 @@ class FilesAndFoldersProcess:
             await self.files_and_folders.upload_from_inet_to_disk(
                 download_link, file_name)
         await self.json.save_result(response)
-    
-    async def __get_flat_list(self) -> None:
-        
-        params = form_dict_to_request(
-            self.properties['get_flat_list_params'])
-        flat_list = await self.files_and_folders.get_flat_list(params)
-
-        await self.json.save_result(flat_list)

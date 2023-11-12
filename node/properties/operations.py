@@ -33,10 +33,6 @@ property_files_and_folders_operations = Property(
             value=FilesAndFoldersOperations.del_file_or_folder,
         ),
         OptionValue(
-            name='Upload file',
-            value=FilesAndFoldersOperations.upload_file,
-        ),
-        OptionValue(
             name='Get meta info',
             value=FilesAndFoldersOperations.get_meta_info,
         ),
@@ -56,10 +52,18 @@ property_files_and_folders_operations = Property(
             name='Get file in base64',
             value=FilesAndFoldersOperations.get_file_in_base64,
         ),
-        
         OptionValue(
             name='Get flat list',
             value=FilesAndFoldersOperations.get_flat_list,
+        ),
+        OptionValue(
+            name='Get flat list ordered by download date',
+            value=FilesAndFoldersOperations.get_flat_list_ordered_by_date,
+        ),
+        
+        OptionValue(
+            name='Upload file',
+            value=FilesAndFoldersOperations.upload_file,
         ),
     ],
     displayOptions=DisplayOptions(
