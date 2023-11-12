@@ -60,6 +60,14 @@ property_files_and_folders_operations = Property(
             name='Get flat list ordered by download date',
             value=FilesAndFoldersOperations.get_flat_list_ordered_by_date,
         ),
+        OptionValue(
+            name='Move file or folder',
+            value=FilesAndFoldersOperations.move_file_or_folder,
+        ),
+        OptionValue(
+            name='Get public resource list',
+            value=FilesAndFoldersOperations.get_public_resource_list,
+        ),
         
         OptionValue(
             name='Upload file',

@@ -141,3 +141,43 @@ property_get_file_in_base64_path = Property(
         },
     ),
 )
+
+property_move_from_path = Property(
+    displayName='From',
+    name='move_from_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к перемещаемому ресурсу.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.move_file_or_folder,
+            ],
+        },
+    ),
+)
+
+property_move_to_path = Property(
+    displayName='Path',
+    name='move_to_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к создаваемому ресурсу.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.move_file_or_folder,
+            ],
+        },
+    ),
+)

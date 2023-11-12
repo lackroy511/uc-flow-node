@@ -821,3 +821,210 @@ property_get_flat_list_ordered_by_date_params = Property(
         },
     ),
 )
+
+property_move_file_or_folder_params = Property(
+    displayName='Params',
+    name='move_file_or_folder_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=CopyFileOrFolderParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=CopyFileOrFolderParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Force Async',
+            name=CopyFileOrFolderParams.force_async,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Force Async',
+                    name=CopyFileOrFolderParams.force_async,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Список возвращаемых атрибутов.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Overwrite',
+            name=CopyFileOrFolderParams.overwrite,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Overwrite',
+                    name=CopyFileOrFolderParams.overwrite,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Список возвращаемых атрибутов.',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.move_file_or_folder,
+            ],
+        },
+    ),
+)
+
+property_get_public_resource_list_params = Property(
+    displayName='Params',
+    name='get_public_resource_list_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=Params.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=Params.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Limit',
+            name=Params.limit,
+            type=Property.Type.NUMBER,
+            default=20,
+            values=[
+                Property(
+                    displayName='Limit',
+                    name='limit',
+                    type=Property.Type.NUMBER,
+                    default='',
+                    placeholder='Количество файлов в запросе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Offset',
+            name=Params.offset,
+            type=Property.Type.NUMBER,
+            default='',
+            values=[
+                Property(
+                    displayName='Offset',
+                    name=Params.offset,
+                    type=Property.Type.NUMBER,
+                    default='',
+                    placeholder='Смещение от начала списка ресурсов.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Preview size',
+            name=Params.preview_size,
+            type=Property.Type.OPTIONS,
+            default='',
+            values=[
+                Property(
+                    displayName='Preview size',
+                    name=Params.preview_size,
+                    type=Property.Type.OPTIONS,
+                    default='',
+                    placeholder='Размер уменьшенного изображения',
+                    options=[
+                        OptionValue(
+                            name=PreviewSizes.S_SIZE,
+                            value=PreviewSizes.S_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.M_SIZE,
+                            value=PreviewSizes.M_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.L_SIZE,
+                            value=PreviewSizes.L_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XL_SIZE,
+                            value=PreviewSizes.XL_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XXL_SIZE,
+                            value=PreviewSizes.XXL_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XXXL_SIZE,
+                            value=PreviewSizes.XXXL_SIZE,
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Property(
+            displayName='Preview crop',
+            name=Params.preview_crop,
+            type=Property.Type.BOOLEAN,
+            default='',
+            values=[
+                Property(
+                    displayName='Preview crop',
+                    name=Params.preview_crop,
+                    type=Property.Type.BOOLEAN,
+                    default='',
+                    placeholder='Обрезать превью согласно размеру',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Type',
+            name='type',
+            type=Property.Type.OPTIONS,
+            default='',
+            values=[
+                Property(
+                    displayName='Type',
+                    name='type',
+                    type=Property.Type.OPTIONS,
+                    default='',
+                    placeholder='Фильтр по типам ресурсов.',
+                    options=[
+                        OptionValue(
+                            name='file',
+                            value='file',
+                        ),
+                        OptionValue(
+                            name='dir',
+                            value='dir',
+                        ),  
+                    ],
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.get_public_resource_list,
+            ],
+            'resource': [
+                Resources.files_and_folders,
+            ],
+        },
+    ),
+)

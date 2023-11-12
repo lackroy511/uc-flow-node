@@ -19,6 +19,8 @@ class FilesAndFoldersOperations(str, Enum):
     get_file_in_base64 = 'get_file_in_base64'
     get_flat_list = 'get_flat_list'
     get_flat_list_ordered_by_date = 'get_flat_list_ordered_by_date'
+    move_file_or_folder = 'move_file_or_folder'
+    get_public_resource_list = 'get_public_resource_list'
     
     upload_file = 'upload_file'
 
