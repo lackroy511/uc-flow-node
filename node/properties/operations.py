@@ -76,6 +76,10 @@ property_files_and_folders_operations = Property(
             name='Unpublish resource',
             value=FilesAndFoldersOperations.unpublish_resource,
         ),
+        OptionValue(
+            name='Get upload link',
+            value=FilesAndFoldersOperations.get_upload_link,
+        ),
         
         OptionValue(
             name='Upload file',

@@ -221,3 +221,23 @@ property_unpublish_resource_path = Property(
         },
     ),
 )
+
+property_get_upload_link_path = Property(
+    displayName='Path',
+    name='get_upload_link_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к загружаемому файлу на Диске.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.get_upload_link,
+            ],
+        },
+    ),
+)

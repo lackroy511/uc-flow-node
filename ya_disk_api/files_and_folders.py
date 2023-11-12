@@ -22,6 +22,7 @@ class FilesAndFolders:
         GET_PUBLIC_RESOURCE_LIST = 'public'
         PUBLISH_RESOURCE = 'publish'
         UNPUBLISH_RESOURCE = 'unpublish'
+        GET_UPLOAD_LINK = 'upload'
     
     BASE_URL = 'https://cloud-api.yandex.net/v1/disk/resources/'
     BASE_DIR_OF_DISK = 'disk:/'
@@ -219,6 +220,21 @@ class FilesAndFolders:
 
         return response.json()
     
+    async def get_upload_link(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_UPLOAD_LINK}'      
+        
+        unpublish: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await unpublish.execute()
+
+        return response.json()
+    
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,
@@ -294,6 +310,9 @@ class FilesAndFoldersProcess:
         
         if self.operation == FilesAndFoldersOperations.unpublish_resource:
             await self.__unpublish_resource()
+        
+        if self.operation == FilesAndFoldersOperations.get_upload_link:
+            await self.__get_upload_link()
         
         if self.operation == FilesAndFoldersOperations.upload_file:
             await self.__upload_file()
@@ -433,6 +452,16 @@ class FilesAndFoldersProcess:
         params['path'] = path
         
         response = await self.files_and_folders.unpublish_resource(params)
+        await self.json.save_result(response)
+    
+    async def __get_upload_link(self) -> None:
+        
+        path = self.properties['get_upload_link_path']
+        params = form_dict_to_request(
+            self.properties['get_upload_link_params'])
+        params['path'] = path
+        
+        response = await self.files_and_folders.get_upload_link(params)
         await self.json.save_result(response)
     
     async def __upload_file(self) -> None:

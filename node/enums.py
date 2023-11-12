@@ -23,6 +23,7 @@ class FilesAndFoldersOperations(str, Enum):
     get_public_resource_list = 'get_public_resource_list'
     publish_resource = 'publish_resource'
     unpublish_resource = 'unpublish_resource'
+    get_upload_link = 'get_upload_link'
     upload_file = 'upload_file'
 
 
