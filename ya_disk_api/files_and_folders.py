@@ -1,12 +1,13 @@
 import json as python_json
 from typing import Any, Dict
 
-from uc_http_requester.requester import Request
+from uc_http_requester.requester import Request, Response
 
 from uc_flow_nodes.schemas import NodeRunContext
 
 from node.enums import FilesAndFoldersOperations
 from util.dict_formatter import form_dict_to_request
+from util.file_encoder import download_file
 
 
 class FilesAndFolders:
@@ -15,6 +16,7 @@ class FilesAndFolders:
         UPLOAD_TO_DISK = 'upload'
         GET_FLAT_LIST = 'files'
         COPY_FILE_OR_FOLDER = 'copy'
+        GET_FILE_IN_BASE64 = 'download'
     
     BASE_URL = 'https://cloud-api.yandex.net/v1/disk/resources/'
     BASE_DIR_OF_DISK = 'disk:/'
@@ -105,6 +107,21 @@ class FilesAndFolders:
 
         return response.json()
     
+    async def get_file_in_base64(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FILE_IN_BASE64}'      
+        
+        create_folder: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await create_folder.execute()
+
+        return response.json()
+    
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,
@@ -173,6 +190,9 @@ class FilesAndFoldersProcess:
         if self.operation == FilesAndFoldersOperations.copy_file_or_folder:
             await self.__copy_file_or_folder()
         
+        if self.operation == FilesAndFoldersOperations.get_file_in_base64:
+            await self.__get_file_in_base64()
+        
         if self.operation == FilesAndFoldersOperations.upload_file:
             await self.__upload_file()
         
@@ -239,6 +259,22 @@ class FilesAndFoldersProcess:
         
         response = await self.files_and_folders.copy_file_or_folder(params)
         await self.json.save_result(response)
+    
+    async def __get_file_in_base64(self) -> None:
+        
+        path = self.properties['get_file_in_base64_path']
+        params = form_dict_to_request(
+            self.properties['get_file_in_base64_params'])
+        params['path'] = path
+        
+        response = await self.files_and_folders.get_file_in_base64(params)
+        
+        if response.get('href'):
+            url = response.get('href')
+            file_in_base64 = await download_file(url)
+            await self.json.save_result(file_in_base64)
+        else:
+            await self.json.save_result(response)
     
     async def __upload_file(self) -> None:
         

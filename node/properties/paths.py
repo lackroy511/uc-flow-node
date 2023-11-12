@@ -121,3 +121,23 @@ property_copy_to_path = Property(
         },
     ),
 )
+
+property_get_file_in_base64_path = Property(
+    displayName='Path',
+    name='get_file_in_base64_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к ресурсу.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.get_file_in_base64,
+            ],
+        },
+    ),
+)

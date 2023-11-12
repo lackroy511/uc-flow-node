@@ -1,7 +1,7 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
 from node.enums import CopyFileOrFolderParams, CreateFolderParams, \
-    DelFileOrFolderParams, \
+    DelFileOrFolderParams, GetFileInBase64Params, \
     GetMetaInfoParams, MediaTypes, \
     FilesAndFoldersOperations, Params, \
     PreviewSizes, Resources, UpdateMetaInfoParams, UserDiskOptions
@@ -587,6 +587,39 @@ property_copy_file_or_folder_params = Property(
             ],
             'files_and_folders_operations': [
                 FilesAndFoldersOperations.copy_file_or_folder,
+            ],
+        },
+    ),
+)
+
+property_get_file_in_base64_params = Property(
+    displayName='Params',
+    name='get_file_in_base64_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=GetFileInBase64Params.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=GetFileInBase64Params.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.files_and_folders,
+            ],
+            'files_and_folders_operations': [
+                FilesAndFoldersOperations.get_file_in_base64,
             ],
         },
     ),
