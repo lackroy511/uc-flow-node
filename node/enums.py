@@ -119,6 +119,11 @@ class TrashParams(str, Enum):
     fields = 'fields'
     force_async = 'force_async'
     path = 'path'
+    limit = 'limit'
+    offset = 'offset'
+    preview_crop = 'preview_crop'
+    preview_size = 'preview_size'
+    sort = 'sort'
     
     
 class PreviewSizes(str, Enum):

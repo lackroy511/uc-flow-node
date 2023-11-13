@@ -1500,3 +1500,137 @@ property_empty_trash_params = Property(
         },
     ),
 )
+
+property_get_trash_contents_params = Property(
+    displayName='Params',
+    name='get_trash_contents_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=TrashParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=TrashParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Limit',
+            name=TrashParams.limit,
+            type=Property.Type.NUMBER,
+            default=20,
+            values=[
+                Property(
+                    displayName='Limit',
+                    name='limit',
+                    type=Property.Type.NUMBER,
+                    default='',
+                    placeholder='Количество файлов в запросе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Offset',
+            name=TrashParams.offset,
+            type=Property.Type.NUMBER,
+            default='',
+            values=[
+                Property(
+                    displayName='Offset',
+                    name=TrashParams.offset,
+                    type=Property.Type.NUMBER,
+                    default='',
+                    placeholder='Количество ресурсов с начала списка',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Preview size',
+            name=TrashParams.preview_size,
+            type=Property.Type.OPTIONS,
+            default='',
+            values=[
+                Property(
+                    displayName='Preview size',
+                    name=TrashParams.preview_size,
+                    type=Property.Type.OPTIONS,
+                    default='',
+                    placeholder='Размер уменьшенного изображения',
+                    options=[
+                        OptionValue(
+                            name=PreviewSizes.S_SIZE,
+                            value=PreviewSizes.S_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.M_SIZE,
+                            value=PreviewSizes.M_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.L_SIZE,
+                            value=PreviewSizes.L_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XL_SIZE,
+                            value=PreviewSizes.XL_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XXL_SIZE,
+                            value=PreviewSizes.XXL_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XXXL_SIZE,
+                            value=PreviewSizes.XXXL_SIZE,
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Property(
+            displayName='Preview crop',
+            name=TrashParams.preview_crop,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Preview crop',
+                    name=TrashParams.preview_crop,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Обрезать превью согласно размеру',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Sort by',
+            name=TrashParams.sort,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Sort by',
+                    name=TrashParams.sort,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='name,path,created,modified,size ',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'trash_operations': [
+                TrashOperations.get_trash_contents,
+            ],
+            'resource': [
+                Resources.trash,
+            ],
+        },
+    ),
+)

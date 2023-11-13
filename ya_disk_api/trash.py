@@ -40,6 +40,20 @@ class Trash:
         )
         return await empty_trash.execute()
 
+    async def get_trash_contents(
+            self, params: Dict[str, Any]) -> Response:
+        
+        api_url: str = f'{self.BASE_URL}'   
+        get_trash_contents: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await get_trash_contents.execute()
+        
+        return response.json()
+    
     
 class TrashProcess:
     
@@ -58,7 +72,10 @@ class TrashProcess:
     async def execute(self):
         if self.operation == TrashOperations.empty_trash:
             await self.__empty_trash()
-            
+        
+        if self.operation == TrashOperations.get_trash_contents:
+            await self.__get_trash_contents()
+        
     async def __empty_trash(self):
         params = form_dict_to_request(
             self.properties['empty_trash_params'])
@@ -68,3 +85,10 @@ class TrashProcess:
             await self.json.save_result({'message': 'success'})
         else:
             await self.json.save_result(response.json())
+
+    async def __get_trash_contents(self):
+        params = form_dict_to_request(
+            self.properties['get_trash_contents_params'])
+        
+        response = await self.trash.get_trash_contents(params)
+        await self.json.save_result(response)

@@ -1,6 +1,6 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import FilesAndFoldersOperations, Resources
+from node.enums import FilesAndFoldersOperations, Resources, TrashOperations
 
 property_path_to_delete = Property(
     displayName='Path',
@@ -237,6 +237,26 @@ property_get_upload_link_path = Property(
             ],
             'files_and_folders_operations': [
                 FilesAndFoldersOperations.get_upload_link,
+            ],
+        },
+    ),
+)
+
+property_get_trash_contents_path = Property(
+    displayName='Path',
+    name='get_trash_contents_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к ресурсу в Корзине.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.trash,
+            ],
+            'trash_operations': [
+                TrashOperations.get_trash_contents,
             ],
         },
     ),
