@@ -562,7 +562,7 @@ property_copy_file_or_folder_params = Property(
                     name=CopyFileOrFolderParams.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
-                    placeholder='Список возвращаемых атрибутов.',
+                    placeholder='Выполнить асинхронно.',
                 ),
             ],
         ),
@@ -577,7 +577,7 @@ property_copy_file_or_folder_params = Property(
                     name=CopyFileOrFolderParams.overwrite,
                     type=Property.Type.BOOLEAN,
                     default=False,
-                    placeholder='Список возвращаемых атрибутов.',
+                    placeholder='Перезаписать ресурс.',
                 ),
             ],
         ),
@@ -1630,6 +1630,84 @@ property_get_trash_contents_params = Property(
             ],
             'resource': [
                 Resources.trash,
+            ],
+        },
+    ),
+)
+
+property_restore_resource_params = Property(
+    displayName='Params',
+    name='restore_resource_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=TrashParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=TrashParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Force async',
+            name=TrashParams.force_async,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Force async',
+                    name=TrashParams.force_async,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Выполнить асинхронно.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Name',
+            name=TrashParams.name,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Name',
+                    name=TrashParams.name,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Имя восстановленного ресурса.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Overwrite',
+            name=TrashParams.overwrite,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Overwrite',
+                    name=TrashParams.overwrite,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Перезаписать ресурс восстанавливаемым.',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.trash,
+            ],
+            'trash_operations': [
+                TrashOperations.restore_resource,
             ],
         },
     ),

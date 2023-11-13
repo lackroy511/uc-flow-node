@@ -142,7 +142,7 @@ property_trash_operations = Property(
         ),
         OptionValue(
             name='Restore resource from trash',
-            value=TrashOperations.restore_resource_from_trash,
+            value=TrashOperations.restore_resource,
         ),
     ],
     displayOptions=DisplayOptions(

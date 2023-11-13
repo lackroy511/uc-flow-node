@@ -38,7 +38,7 @@ class PublicFilesAndFoldersOperations(str, Enum):
 class TrashOperations(str, Enum):
     empty_trash = 'empty_trash'
     get_trash_contents = 'get_trash_contents'
-    restore_resource_from_trash = 'restore_resource_from_trash'
+    restore_resource = 'restore_resource'
     
 
 class MediaTypes(str, Enum):
@@ -124,6 +124,8 @@ class TrashParams(str, Enum):
     preview_crop = 'preview_crop'
     preview_size = 'preview_size'
     sort = 'sort'
+    overwrite = 'overwrite'
+    name = 'name'
     
     
 class PreviewSizes(str, Enum):

@@ -261,3 +261,23 @@ property_get_trash_contents_path = Property(
         },
     ),
 )
+
+property_restore_resource_path = Property(
+    displayName='Path',
+    name='restore_resource_path',
+    type=Property.Type.STRING,
+    required=True,
+    description='Путь к ресурсу в Корзине.',
+    default='',
+    placeholder='folder/file.txt',
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.trash,
+            ],
+            'trash_operations': [
+                TrashOperations.restore_resource,
+            ],
+        },
+    ),
+)

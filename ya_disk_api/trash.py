@@ -54,6 +54,20 @@ class Trash:
         
         return response.json()
     
+    async def restore_resource(
+            self, params: Dict[str, Any]) -> Response:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.RESTORE}'   
+        restore_resource: Request = Request(
+            url=api_url,
+            method=Request.Method.put,
+            headers=self.base_headers,
+            params=params,
+        )
+        response = await restore_resource.execute()
+        
+        return response.json()
+    
     
 class TrashProcess:
     
@@ -76,6 +90,9 @@ class TrashProcess:
         if self.operation == TrashOperations.get_trash_contents:
             await self.__get_trash_contents()
         
+        if self.operation == TrashOperations.restore_resource:
+            await self.__restore_resource()
+        
     async def __empty_trash(self):
         params = form_dict_to_request(
             self.properties['empty_trash_params'])
@@ -91,4 +108,11 @@ class TrashProcess:
             self.properties['get_trash_contents_params'])
         
         response = await self.trash.get_trash_contents(params)
+        await self.json.save_result(response)
+
+    async def __restore_resource(self):
+        params = form_dict_to_request(
+            self.properties['restore_resource_params'])
+        
+        response = await self.trash.restore_resource(params)
         await self.json.save_result(response)

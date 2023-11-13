@@ -24,7 +24,8 @@ from node.properties.params import (
     property_unpublish_resource_params, property_update_meta_info_params,
     property_user_disk_params,
     property_get_download_link_params, property_save_resource_params,
-    property_empty_trash_params, property_get_trash_contents_params)
+    property_empty_trash_params, property_get_trash_contents_params,
+    property_restore_resource_params)
 
 from node.properties.paths import (property_copy_from_path,
                                    property_copy_to_path,
@@ -38,7 +39,8 @@ from node.properties.paths import (property_copy_from_path,
                                    property_publish_resource_path,
                                    property_unpublish_resource_path,
                                    property_update_meta_info_path,
-                                   property_get_trash_contents_path)
+                                   property_get_trash_contents_path,
+                                   property_restore_resource_path)
 
 from node.properties.public_keys import (property_get_meta_info_public_key,
                                          property_get_download_link_public_key,
@@ -178,4 +180,8 @@ class NodeType(flow.NodeType):
         # trash\get trash contents
         property_get_trash_contents_path,
         property_get_trash_contents_params,
+        
+        # trash\restore resource
+        property_restore_resource_path,
+        property_restore_resource_params,
     ]
