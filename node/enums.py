@@ -104,6 +104,8 @@ class Params(str, Enum):
 class PublicFilesAndFoldersParams(str, Enum):
     fields = 'fields'
     path = 'path'
+    save_path = 'save_path'
+    name = 'name'
     
 
 class PreviewSizes(str, Enum):

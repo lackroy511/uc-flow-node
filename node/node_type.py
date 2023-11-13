@@ -22,7 +22,7 @@ from node.properties.params import (
     property_move_file_or_folder_params, property_publish_resource_params,
     property_unpublish_resource_params, property_update_meta_info_params,
     property_user_disk_params,
-    property_get_download_link_params)
+    property_get_download_link_params, property_save_resource_params)
 
 from node.properties.paths import (property_copy_from_path,
                                    property_copy_to_path,
@@ -38,7 +38,8 @@ from node.properties.paths import (property_copy_from_path,
                                    property_update_meta_info_path)
 
 from node.properties.public_keys import (property_get_meta_info_public_key,
-                                         property_get_download_link_public_key)
+                                         property_get_download_link_public_key,
+                                         property_save_resource_public_key)
 
 from node.properties.unique import (property_body, property_download_link,
                                     property_file_name)
@@ -156,4 +157,8 @@ class NodeType(flow.NodeType):
         # public files and folders\get download link
         property_get_download_link_public_key,
         property_get_download_link_params,
+        
+        # public files and folders\save resource to download folder
+        property_save_resource_public_key,
+        property_save_resource_params,
     ]

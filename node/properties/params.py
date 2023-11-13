@@ -1340,3 +1340,99 @@ property_get_download_link_params = Property(
         },
     ),
 )
+
+property_save_resource_params = Property(
+    displayName='Params',
+    name='save_resource_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=PublicFilesAndFoldersParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=GetFileInBase64Params.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Путь к копируемому ресурсу' + 
+                                ' в публичной папке.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Force async',
+            name=DelFileOrFolderParams.force_async,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Force async',
+                    name=DelFileOrFolderParams.force_async,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Выполнить асинхронно.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Name',
+            name=PublicFilesAndFoldersParams.name,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Name',
+                    name=PublicFilesAndFoldersParams.name,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Имя сохраняемого ресурса.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Path',
+            name=PublicFilesAndFoldersParams.path,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Path',
+                    name=PublicFilesAndFoldersParams.path,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Путь к копируемому ресурсу' + 
+                                ' в публичной папке.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Save path',
+            name=PublicFilesAndFoldersParams.save_path,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Save path',
+                    name=PublicFilesAndFoldersParams.save_path,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Путь к папке, в которую будет' + 
+                                ' сохранен ресурс. По умолчанию «Загрузки».',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.public_files_and_folders,
+            ],
+            'public_files_and_folders_operations': [
+                PublicFilesAndFoldersOperations.save_resource,
+            ],
+        },
+    ),
+)

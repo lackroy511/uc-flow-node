@@ -58,6 +58,21 @@ class PublicFilesAndFolders:
         response: Response = await download_link.execute()
 
         return response.json()
+    
+    async def save_resource(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.SAVE_RESOURCE}'   
+        
+        download_link: Request = Request(
+            url=api_url,
+            method=Request.Method.post,
+            headers=self.base_headers,
+            params=params,
+        )
+        response: Response = await download_link.execute()
+
+        return response.json()
 
     
 class PublicFilesAndFoldersProcess:
@@ -80,7 +95,10 @@ class PublicFilesAndFoldersProcess:
         
         if self.operation == PublicFilesAndFoldersOperations.get_download_link:
             await self.__get_download_link()
-    
+            
+        if self.operation == PublicFilesAndFoldersOperations.save_resource:
+            await self.__save_resource()
+            
     async def __get_meta_info(self):
         public_key = self.properties['get_meta_info_public_key']
         params = form_dict_to_request(
@@ -96,8 +114,17 @@ class PublicFilesAndFoldersProcess:
         params = form_dict_to_request(
             self.properties['get_download_link_params'])
         params['public_key'] = public_key
-        print(params)
         meta_info = await self.public_files_and_folders.get_download_link(
+            params)
+        
+        await self.json.save_result(meta_info)
+
+    async def __save_resource(self):
+        public_key = self.properties['save_resource_public_key']
+        params = form_dict_to_request(
+            self.properties['save_resource_params'])
+        params['public_key'] = public_key
+        meta_info = await self.public_files_and_folders.save_resource(
             params)
         
         await self.json.save_result(meta_info)
