@@ -246,7 +246,6 @@ property_get_trash_contents_path = Property(
     displayName='Path',
     name='get_trash_contents_path',
     type=Property.Type.STRING,
-    required=True,
     description='Путь к ресурсу в Корзине.',
     default='',
     placeholder='folder/file.txt',

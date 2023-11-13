@@ -15,7 +15,7 @@ class Trash:
     class RequestType:
         RESTORE = 'restore'
         
-    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/trash/resources'
+    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/trash/resources/'
     BASE_DIR_OF_DISK = 'disk:/'
     
     def __init__(self, access_token: str) -> None:
@@ -104,15 +104,24 @@ class TrashProcess:
             await self.json.save_result(response.json())
 
     async def __get_trash_contents(self):
+        path = self.properties['get_trash_contents_path']
         params = form_dict_to_request(
             self.properties['get_trash_contents_params'])
+        
+        if params.get('path'):
+            params['path'] = path
+            
         response = await self.trash.get_trash_contents(params)
         
         await self.json.save_result(response)
 
     async def __restore_resource(self):
+        path = self.properties['restore_resource_path']
         params = form_dict_to_request(
             self.properties['restore_resource_params'])
+        
+        params['path'] = path
+        print(params)
         response = await self.trash.restore_resource(params)
         
         await self.json.save_result(response)
