@@ -1,5 +1,6 @@
-import aiohttp
 import base64
+
+import aiohttp
 
 
 async def download_file(url: str) -> str:

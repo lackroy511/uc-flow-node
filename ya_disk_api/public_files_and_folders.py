@@ -1,12 +1,11 @@
 import json as python_json
 from typing import Any, Dict
 
+from uc_flow_nodes.schemas import NodeRunContext
 from uc_http_requester.requester import Request, Response
 
-from uc_flow_nodes.schemas import NodeRunContext
-
-from node.enums import FilesAndFoldersOperations, \
-    PublicFilesAndFoldersOperations
+from node.enums import (FilesAndFoldersOperations,
+                        PublicFilesAndFoldersOperations)
 from util.dict_formatter import form_dict_to_request
 from util.file_encoder import download_file
 
@@ -45,7 +44,22 @@ class PublicFilesAndFolders:
 
         return response.json()
 
+    async def get_download_link(
+            self, params: Dict[str, Any]) -> Dict[str, Any]:
+        
+        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_DOWNLOAD_LINK}'   
+        
+        download_link: Request = Request(
+            url=api_url,
+            method=Request.Method.get,
+            headers=self.base_headers,
+            params=params,
+        )
+        response: Response = await download_link.execute()
 
+        return response.json()
+
+    
 class PublicFilesAndFoldersProcess:
     
     def __init__(
@@ -63,6 +77,9 @@ class PublicFilesAndFoldersProcess:
     async def execute(self):
         if self.operation == PublicFilesAndFoldersOperations.get_meta_info:
             await self.__get_meta_info()
+        
+        if self.operation == PublicFilesAndFoldersOperations.get_download_link:
+            await self.__get_download_link()
     
     async def __get_meta_info(self):
         public_key = self.properties['get_meta_info_public_key']
@@ -71,5 +88,16 @@ class PublicFilesAndFoldersProcess:
         params['public_key'] = public_key
         
         meta_info = await self.public_files_and_folders.get_meta_info(params)
+        
+        await self.json.save_result(meta_info)
+
+    async def __get_download_link(self):
+        public_key = self.properties['get_download_link_public_key']
+        params = form_dict_to_request(
+            self.properties['get_download_link_params'])
+        params['public_key'] = public_key
+        print(params)
+        meta_info = await self.public_files_and_folders.get_download_link(
+            params)
         
         await self.json.save_result(meta_info)

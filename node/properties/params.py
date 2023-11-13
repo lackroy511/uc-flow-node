@@ -1,12 +1,11 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import CopyFileOrFolderParams, CreateFolderParams, \
-    DelFileOrFolderParams, GetFileInBase64Params, \
-    GetMetaInfoParams, MediaTypes, \
-    FilesAndFoldersOperations, Params, \
-    PreviewSizes, PublicFilesAndFoldersOperations, \
-    PublicFilesAndFoldersParams, Resources, UpdateMetaInfoParams, \
-    UserDiskOptions
+from node.enums import (CopyFileOrFolderParams, CreateFolderParams,
+                        DelFileOrFolderParams, FilesAndFoldersOperations,
+                        GetFileInBase64Params, GetMetaInfoParams, MediaTypes,
+                        Params, PreviewSizes, PublicFilesAndFoldersOperations,
+                        PublicFilesAndFoldersParams, Resources,
+                        UpdateMetaInfoParams, UserDiskOptions)
 
 property_user_disk_params = Property(
     displayName='Params',
@@ -1289,6 +1288,54 @@ property_get_public_meta_info_params = Property(
             ],
             'public_files_and_folders_operations': [
                 PublicFilesAndFoldersOperations.get_meta_info,
+            ],
+        },
+    ),
+)
+
+property_get_download_link_params = Property(
+    displayName='Params',
+    name='get_download_link_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=PublicFilesAndFoldersParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=GetFileInBase64Params.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Path',
+            name=PublicFilesAndFoldersParams.path,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Path',
+                    name=PublicFilesAndFoldersParams.path,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Путь к ресурсу в публичной папке.',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.public_files_and_folders,
+            ],
+            'public_files_and_folders_operations': [
+                PublicFilesAndFoldersOperations.get_download_link,
             ],
         },
     ),
