@@ -106,13 +106,13 @@ class TrashProcess:
     async def __get_trash_contents(self):
         params = form_dict_to_request(
             self.properties['get_trash_contents_params'])
-        
         response = await self.trash.get_trash_contents(params)
+        
         await self.json.save_result(response)
 
     async def __restore_resource(self):
         params = form_dict_to_request(
             self.properties['restore_resource_params'])
-        
         response = await self.trash.restore_resource(params)
+        
         await self.json.save_result(response)

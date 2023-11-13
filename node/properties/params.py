@@ -1,6 +1,7 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import (CopyFileOrFolderParams, CreateFolderParams,
+from node.enums import (AsyncOpOperations, CopyFileOrFolderParams, 
+                        CreateFolderParams,
                         DelFileOrFolderParams, FilesAndFoldersOperations,
                         GetFileInBase64Params, GetMetaInfoParams, MediaTypes,
                         Params, PreviewSizes, PublicFilesAndFoldersOperations,
@@ -1708,6 +1709,39 @@ property_restore_resource_params = Property(
             ],
             'trash_operations': [
                 TrashOperations.restore_resource,
+            ],
+        },
+    ),
+)
+
+property_get_operation_status_params = Property(
+    displayName='Params',
+    name='get_operation_status_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=TrashParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=TrashParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.async_operation,
+            ],
+            'async_operation_operations': [
+                AsyncOpOperations.get_operation_status,
             ],
         },
     ),

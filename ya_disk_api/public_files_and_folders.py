@@ -41,7 +41,7 @@ class PublicFilesAndFolders:
             params=params,
         )
         response: Response = await meta_info.execute()
-
+        print(response.json())
         return response.json()
 
     async def get_download_link(

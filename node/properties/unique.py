@@ -1,6 +1,6 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import FilesAndFoldersOperations, Resources
+from node.enums import AsyncOpOperations, FilesAndFoldersOperations, Resources
 
 property_body = Property(
     displayName='Body',
@@ -57,6 +57,25 @@ property_file_name = Property(
             ],
             'resource': [
                 Resources.files_and_folders,
+            ],
+        },
+    ),
+)
+
+property_operation_id = Property(
+    displayName='Operation id',
+    name='operation_id',
+    type=Property.Type.STRING,
+    required=True,
+    default='',
+    description='Идентификатор операции.',
+    displayOptions=DisplayOptions(
+        show={
+            'async_operation_operations': [
+                AsyncOpOperations.get_operation_status,
+            ],
+            'resource': [
+                Resources.async_operation,
             ],
         },
     ),

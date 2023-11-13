@@ -11,7 +11,8 @@ from node.properties.operations import (
     property_files_and_folders_operations,
     property_public_files_and_folders_operations,
     property_user_disk_operations,
-    property_trash_operations)
+    property_trash_operations,
+    property_async_operation_options)
 
 from node.properties.params import (
     property_copy_file_or_folder_params, property_create_folder_params,
@@ -25,7 +26,7 @@ from node.properties.params import (
     property_user_disk_params,
     property_get_download_link_params, property_save_resource_params,
     property_empty_trash_params, property_get_trash_contents_params,
-    property_restore_resource_params)
+    property_restore_resource_params, property_get_operation_status_params)
 
 from node.properties.paths import (property_copy_from_path,
                                    property_copy_to_path,
@@ -47,7 +48,7 @@ from node.properties.public_keys import (property_get_meta_info_public_key,
                                          property_save_resource_public_key)
 
 from node.properties.unique import (property_body, property_download_link,
-                                    property_file_name)
+                                    property_file_name, property_operation_id)
 
 
 class NodeType(flow.NodeType):
@@ -88,6 +89,10 @@ class NodeType(flow.NodeType):
                 OptionValue(
                     name='Trash',
                     value=Resources.trash,
+                ),
+                OptionValue(
+                    name='Async operation',
+                    value=Resources.async_operation,
                 ),
             ],
         ),
@@ -184,4 +189,11 @@ class NodeType(flow.NodeType):
         # trash\restore resource
         property_restore_resource_path,
         property_restore_resource_params,
+        
+        # async operation/operations
+        property_async_operation_options,
+        
+        # async operation/get operation id
+        property_operation_id,
+        property_get_operation_status_params,
     ]

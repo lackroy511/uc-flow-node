@@ -14,6 +14,7 @@ from node.enums import (FilesAndFoldersOperations, MediaTypes, Params,
 from node.node_type import NodeType
 from util.dict_formatter import form_dict_to_request
 from util.path_encoder import encode_path_to_url_format
+from ya_disk_api.async_operation import AsyncOperation, AsyncOperationProcess
 from ya_disk_api.files_and_folders import (FilesAndFolders,
                                            FilesAndFoldersProcess)
 from ya_disk_api.public_files_and_folders import (PublicFilesAndFolders,
@@ -64,6 +65,14 @@ class ExecuteView(execute.Execute):
                 
                 process = TrashProcess(
                     operation, trash, properties, json)
+                await process.execute()
+            
+            if resource == Resources.async_operation:
+                async_operation = AsyncOperation(ya_disk_token)
+                operation = properties['async_operation_operations']
+                
+                process = AsyncOperationProcess(
+                    operation, async_operation, properties, json)
                 await process.execute()
             
             json.state = RunState.complete

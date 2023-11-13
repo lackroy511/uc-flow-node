@@ -6,6 +6,7 @@ class Resources(str, Enum):
     files_and_folders = 'files_and_folders'
     public_files_and_folders = 'public_files_and_folders'
     trash = 'trash'
+    async_operation = 'async_operation'
 
 
 class UserDiskOptions(str, Enum):
@@ -33,6 +34,10 @@ class PublicFilesAndFoldersOperations(str, Enum):
     get_meta_info = 'get_meta_info'
     get_download_link = 'get_download_link'
     save_resource = 'save_resource'
+
+
+class AsyncOpOperations(str, Enum):
+    get_operation_status = 'get_operation_id'
 
 
 class TrashOperations(str, Enum):

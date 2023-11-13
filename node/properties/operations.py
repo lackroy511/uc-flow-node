@@ -1,6 +1,6 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import (FilesAndFoldersOperations,
+from node.enums import (AsyncOpOperations, FilesAndFoldersOperations,
                         PublicFilesAndFoldersOperations, 
                         Resources, 
                         TrashOperations,
@@ -149,6 +149,26 @@ property_trash_operations = Property(
         show={
             'resource': [
                 Resources.trash,
+            ],
+        },
+    ),
+)
+
+property_async_operation_options = Property(
+    displayName='Operation',
+    name='async_operation_operations',
+    type=Property.Type.OPTIONS,
+    noDataExpression=True,
+    options=[
+        OptionValue(
+            name='Get operation status',
+            value=AsyncOpOperations.get_operation_status,
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.async_operation,
             ],
         },
     ),
