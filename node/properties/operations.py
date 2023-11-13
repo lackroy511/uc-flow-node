@@ -1,7 +1,9 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
 from node.enums import (FilesAndFoldersOperations,
-                        PublicFilesAndFoldersOperations, Resources,
+                        PublicFilesAndFoldersOperations, 
+                        Resources, 
+                        TrashOperations,
                         UserDiskOptions)
 
 property_user_disk_operations = Property(
@@ -119,6 +121,34 @@ property_public_files_and_folders_operations = Property(
         show={
             'resource': [
                 Resources.public_files_and_folders,
+            ],
+        },
+    ),
+)
+
+property_trash_operations = Property(
+    displayName='Operation',
+    name='trash_operations',
+    type=Property.Type.OPTIONS,
+    noDataExpression=True,
+    options=[
+        OptionValue(
+            name='Empty trash',
+            value=TrashOperations.empty_trash,
+        ),
+        OptionValue(
+            name='Get trash contents',
+            value=TrashOperations.get_trash_contents,
+        ),
+        OptionValue(
+            name='Restore resource from trash',
+            value=TrashOperations.restore_resource_from_trash,
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.trash,
             ],
         },
     ),

@@ -5,6 +5,7 @@ class Resources(str, Enum):
     user_disk = 'user_disk'
     files_and_folders = 'files_and_folders'
     public_files_and_folders = 'public_files_and_folders'
+    trash = 'trash'
 
 
 class UserDiskOptions(str, Enum):
@@ -33,6 +34,12 @@ class PublicFilesAndFoldersOperations(str, Enum):
     get_download_link = 'get_download_link'
     save_resource = 'save_resource'
 
+
+class TrashOperations(str, Enum):
+    empty_trash = 'empty_trash'
+    get_trash_contents = 'get_trash_contents'
+    restore_resource_from_trash = 'restore_resource_from_trash'
+    
 
 class MediaTypes(str, Enum):
     audio = 'audio'
@@ -106,8 +113,14 @@ class PublicFilesAndFoldersParams(str, Enum):
     path = 'path'
     save_path = 'save_path'
     name = 'name'
-    
 
+
+class TrashParams(str, Enum):
+    fields = 'fields'
+    force_async = 'force_async'
+    path = 'path'
+    
+    
 class PreviewSizes(str, Enum):
     S_SIZE = 'S'
     M_SIZE = 'M'

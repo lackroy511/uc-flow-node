@@ -18,6 +18,7 @@ from ya_disk_api.files_and_folders import (FilesAndFolders,
                                            FilesAndFoldersProcess)
 from ya_disk_api.public_files_and_folders import (PublicFilesAndFolders,
                                                   PublicFilesAndFoldersProcess)
+from ya_disk_api.trash import Trash, TrashProcess
 from ya_disk_api.user_disk import UserDisk, UserDiskProcess
 
 
@@ -56,7 +57,15 @@ class ExecuteView(execute.Execute):
                 process = PublicFilesAndFoldersProcess(
                     operation, public_files_and_folders, properties, json)
                 await process.execute()
+            
+            if resource == Resources.trash:
+                trash = Trash(ya_disk_token)
+                operation = properties['trash_operations']
                 
+                process = TrashProcess(
+                    operation, trash, properties, json)
+                await process.execute()
+            
             json.state = RunState.complete
                 
         except Exception as e:

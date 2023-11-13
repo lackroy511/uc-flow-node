@@ -4,7 +4,8 @@ from node.enums import (CopyFileOrFolderParams, CreateFolderParams,
                         DelFileOrFolderParams, FilesAndFoldersOperations,
                         GetFileInBase64Params, GetMetaInfoParams, MediaTypes,
                         Params, PreviewSizes, PublicFilesAndFoldersOperations,
-                        PublicFilesAndFoldersParams, Resources,
+                        PublicFilesAndFoldersParams, Resources, 
+                        TrashOperations, TrashParams,
                         UpdateMetaInfoParams, UserDiskOptions)
 
 property_user_disk_params = Property(
@@ -1432,6 +1433,69 @@ property_save_resource_params = Property(
             ],
             'public_files_and_folders_operations': [
                 PublicFilesAndFoldersOperations.save_resource,
+            ],
+        },
+    ),
+)
+
+property_empty_trash_params = Property(
+    displayName='Params',
+    name='empty_trash_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=TrashParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=TrashParams.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Force async',
+            name=TrashParams.force_async,
+            type=Property.Type.BOOLEAN,
+            default=False,
+            values=[
+                Property(
+                    displayName='Force async',
+                    name=TrashParams.force_async,
+                    type=Property.Type.BOOLEAN,
+                    default=False,
+                    placeholder='Выполнить асинхронно.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Path',
+            name=TrashParams.path,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Path',
+                    name=TrashParams.path,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Путь к ресурсу в Корзине.',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.trash,
+            ],
+            'trash_operations': [
+                TrashOperations.empty_trash,
             ],
         },
     ),

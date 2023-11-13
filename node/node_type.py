@@ -10,7 +10,8 @@ from node.enums import Resources
 from node.properties.operations import (
     property_files_and_folders_operations,
     property_public_files_and_folders_operations,
-    property_user_disk_operations)
+    property_user_disk_operations,
+    property_trash_operations)
 
 from node.properties.params import (
     property_copy_file_or_folder_params, property_create_folder_params,
@@ -22,7 +23,8 @@ from node.properties.params import (
     property_move_file_or_folder_params, property_publish_resource_params,
     property_unpublish_resource_params, property_update_meta_info_params,
     property_user_disk_params,
-    property_get_download_link_params, property_save_resource_params)
+    property_get_download_link_params, property_save_resource_params,
+    property_empty_trash_params)
 
 from node.properties.paths import (property_copy_from_path,
                                    property_copy_to_path,
@@ -79,6 +81,10 @@ class NodeType(flow.NodeType):
                 OptionValue(
                     name='Public files and folders',
                     value=Resources.public_files_and_folders,
+                ),
+                OptionValue(
+                    name='Trash',
+                    value=Resources.trash,
                 ),
             ],
         ),
@@ -161,4 +167,10 @@ class NodeType(flow.NodeType):
         # public files and folders\save resource to download folder
         property_save_resource_public_key,
         property_save_resource_params,
+        
+        # trash\operations
+        property_trash_operations,
+        
+        # trash\empty trash
+        property_empty_trash_params,
     ]
