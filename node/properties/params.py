@@ -4,7 +4,9 @@ from node.enums import CopyFileOrFolderParams, CreateFolderParams, \
     DelFileOrFolderParams, GetFileInBase64Params, \
     GetMetaInfoParams, MediaTypes, \
     FilesAndFoldersOperations, Params, \
-    PreviewSizes, Resources, UpdateMetaInfoParams, UserDiskOptions
+    PreviewSizes, PublicFilesAndFoldersOperations, \
+    PublicFilesAndFoldersParams, Resources, UpdateMetaInfoParams, \
+    UserDiskOptions
 
 property_user_disk_params = Property(
     displayName='Params',
@@ -1138,6 +1140,155 @@ property_get_upload_link_params = Property(
             ],
             'files_and_folders_operations': [
                 FilesAndFoldersOperations.get_upload_link,
+            ],
+        },
+    ),
+)
+
+property_get_public_meta_info_params = Property(
+    displayName='Params',
+    name='get_public_meta_info_params',
+    type=Property.Type.COLLECTION,
+    options=[
+        Property(
+            displayName='Fields',
+            name=PublicFilesAndFoldersParams.fields,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Fields',
+                    name=GetFileInBase64Params.fields,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Список полей в ответе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Limit',
+            name=Params.limit,
+            type=Property.Type.NUMBER,
+            default=20,
+            values=[
+                Property(
+                    displayName='Limit',
+                    name='limit',
+                    type=Property.Type.NUMBER,
+                    default='',
+                    placeholder='Количество файлов в запросе',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Offset',
+            name=Params.offset,
+            type=Property.Type.NUMBER,
+            default='',
+            values=[
+                Property(
+                    displayName='Offset',
+                    name=Params.offset,
+                    type=Property.Type.NUMBER,
+                    default='',
+                    placeholder='Количество ресурсов с начала списка',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Path',
+            name=PublicFilesAndFoldersParams.path,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Path',
+                    name=PublicFilesAndFoldersParams.path,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='Путь к ресурсу в публичной папке.',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Preview size',
+            name=Params.preview_size,
+            type=Property.Type.OPTIONS,
+            default='',
+            values=[
+                Property(
+                    displayName='Preview size',
+                    name=Params.preview_size,
+                    type=Property.Type.OPTIONS,
+                    default='',
+                    placeholder='Размер уменьшенного изображения',
+                    options=[
+                        OptionValue(
+                            name=PreviewSizes.S_SIZE,
+                            value=PreviewSizes.S_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.M_SIZE,
+                            value=PreviewSizes.M_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.L_SIZE,
+                            value=PreviewSizes.L_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XL_SIZE,
+                            value=PreviewSizes.XL_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XXL_SIZE,
+                            value=PreviewSizes.XXL_SIZE,
+                        ),
+                        OptionValue(
+                            name=PreviewSizes.XXXL_SIZE,
+                            value=PreviewSizes.XXXL_SIZE,
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Property(
+            displayName='Preview crop',
+            name=Params.preview_crop,
+            type=Property.Type.BOOLEAN,
+            default='',
+            values=[
+                Property(
+                    displayName='Preview crop',
+                    name=Params.preview_crop,
+                    type=Property.Type.BOOLEAN,
+                    default='',
+                    placeholder='Обрезать превью согласно размеру',
+                ),
+            ],
+        ),
+        Property(
+            displayName='Sort by',
+            name=GetMetaInfoParams.sort,
+            type=Property.Type.STRING,
+            default='',
+            values=[
+                Property(
+                    displayName='Sort by',
+                    name=GetMetaInfoParams.sort,
+                    type=Property.Type.STRING,
+                    default='',
+                    placeholder='name,path,created,modified,size ',
+                ),
+            ],
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.public_files_and_folders,
+            ],
+            'public_files_and_folders_operations': [
+                PublicFilesAndFoldersOperations.get_meta_info,
             ],
         },
     ),

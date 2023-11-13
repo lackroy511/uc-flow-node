@@ -19,10 +19,11 @@ from node.properties.params import property_get_flat_list_params, \
     property_move_file_or_folder_params, \
     property_get_public_resource_list_params, \
     property_publish_resource_params, property_unpublish_resource_params, \
-    property_get_upload_link_params
+    property_get_upload_link_params, property_get_public_meta_info_params
 
 from node.properties.operations import property_user_disk_operations, \
-    property_files_and_folders_operations
+    property_files_and_folders_operations, \
+    property_public_files_and_folders_operations
 
 
 from node.properties.paths import property_path_to_delete, \
@@ -35,6 +36,8 @@ from node.properties.paths import property_path_to_delete, \
     
 from node.properties.unique import property_body, property_download_link, \
     property_file_name
+
+from node.properties.public_keys import property_get_meta_info_public_key
 
 
 class NodeType(flow.NodeType):
@@ -67,6 +70,10 @@ class NodeType(flow.NodeType):
                 OptionValue(
                     name='Files and folders',
                     value=Resources.files_and_folders,
+                ),
+                OptionValue(
+                    name='Public files and folders',
+                    value=Resources.public_files_and_folders,
                 ),
             ],
         ),
@@ -134,4 +141,13 @@ class NodeType(flow.NodeType):
         # files and folders\upload file
         property_download_link,
         property_file_name,
+        
+        # public files and folders\operations
+        property_public_files_and_folders_operations,
+        
+        # public files and folders\get meta info
+        property_get_meta_info_public_key,
+        property_get_public_meta_info_params,
+        
+        # public files and folders\get download link
     ]

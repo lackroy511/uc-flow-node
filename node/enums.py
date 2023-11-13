@@ -2,8 +2,9 @@ from enum import Enum
 
 
 class Resources(str, Enum):
-    user_disk = 'User disk'
-    files_and_folders = 'Files and folders'
+    user_disk = 'user_disk'
+    files_and_folders = 'files_and_folders'
+    public_files_and_folders = 'public_files_and_folders'
 
 
 class UserDiskOptions(str, Enum):
@@ -25,6 +26,12 @@ class FilesAndFoldersOperations(str, Enum):
     unpublish_resource = 'unpublish_resource'
     get_upload_link = 'get_upload_link'
     upload_file = 'upload_file'
+
+
+class PublicFilesAndFoldersOperations(str, Enum):
+    get_meta_info = 'get_meta_info'
+    get_download_link = 'get_download_link'
+    save_resource = 'save_resource'
 
 
 class MediaTypes(str, Enum):
@@ -92,6 +99,11 @@ class Params(str, Enum):
     fields = 'fields'
     preview_size = 'preview_size'
     preview_crop = 'preview_crop'
+
+
+class PublicFilesAndFoldersParams(str, Enum):
+    fields = 'fields'
+    path = 'path'
     
 
 class PreviewSizes(str, Enum):

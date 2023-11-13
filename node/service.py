@@ -16,6 +16,8 @@ from node.enums import MediaTypes, FilesAndFoldersOperations, \
     Params, PreviewSizes, Resources, UserDiskOptions
 from node.node_type import NodeType
 from util.dict_formatter import form_dict_to_request
+from ya_disk_api.public_files_and_folders import PublicFilesAndFolders, \
+    PublicFilesAndFoldersProcess
 from ya_disk_api.user_disk import UserDisk, UserDiskProcess
 
 
@@ -45,6 +47,14 @@ class ExecuteView(execute.Execute):
                 
                 process = FilesAndFoldersProcess(
                     operation, files_and_folders, properties, json)
+                await process.execute()
+            
+            if resource == Resources.public_files_and_folders:
+                public_files_and_folders = PublicFilesAndFolders(ya_disk_token)
+                operation = properties['public_files_and_folders_operations']
+                
+                process = PublicFilesAndFoldersProcess(
+                    operation, public_files_and_folders, properties, json)
                 await process.execute()
                 
             json.state = RunState.complete

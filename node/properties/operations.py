@@ -1,6 +1,7 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import FilesAndFoldersOperations, Resources, UserDiskOptions
+from node.enums import FilesAndFoldersOperations, \
+    PublicFilesAndFoldersOperations, Resources, UserDiskOptions
 
 property_user_disk_operations = Property(
     displayName='Operation',
@@ -80,7 +81,6 @@ property_files_and_folders_operations = Property(
             name='Get upload link',
             value=FilesAndFoldersOperations.get_upload_link,
         ),
-        
         OptionValue(
             name='Upload file',
             value=FilesAndFoldersOperations.upload_file,
@@ -90,6 +90,34 @@ property_files_and_folders_operations = Property(
         show={
             'resource': [
                 Resources.files_and_folders,
+            ],
+        },
+    ),
+)
+
+property_public_files_and_folders_operations = Property(
+    displayName='Operation',
+    name='public_files_and_folders_operations',
+    type=Property.Type.OPTIONS,
+    noDataExpression=True,
+    options=[
+        OptionValue(
+            name='Get meta info',
+            value=PublicFilesAndFoldersOperations.get_meta_info,
+        ),
+        OptionValue(
+            name='Get download link',
+            value=PublicFilesAndFoldersOperations.get_download_link,
+        ),
+        OptionValue(
+            name='Save resource to download folder',
+            value=PublicFilesAndFoldersOperations.save_resource,
+        ),
+    ],
+    displayOptions=DisplayOptions(
+        show={
+            'resource': [
+                Resources.public_files_and_folders,
             ],
         },
     ),
