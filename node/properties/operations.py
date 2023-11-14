@@ -1,10 +1,8 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
 from node.enums import (AsyncOpOperations, FilesAndFoldersOperations,
-                        PublicFilesAndFoldersOperations, 
-                        Resources, 
-                        TrashOperations,
-                        UserDiskOptions)
+                        PublicFilesAndFoldersOperations, Resources,
+                        TrashOperations, UserDiskOptions)
 
 property_user_disk_operations = Property(
     displayName='Operation',

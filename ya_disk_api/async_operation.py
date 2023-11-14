@@ -2,8 +2,8 @@ from typing import Any, Dict
 
 from uc_flow_nodes.schemas import NodeRunContext
 from uc_http_requester.requester import Request
-from node.enums import AsyncOpOperations
 
+from node.enums import AsyncOpOperations
 from util.dict_formatter import form_dict_to_request
 
 
