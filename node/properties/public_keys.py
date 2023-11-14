@@ -1,4 +1,4 @@
-from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
+from uc_flow_schemas.flow import DisplayOptions, Property
 
 from node.enums import PublicFilesAndFoldersOperations, Resources
 

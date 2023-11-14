@@ -4,10 +4,8 @@ from typing import Any, Dict
 from uc_flow_nodes.schemas import NodeRunContext
 from uc_http_requester.requester import Request, Response
 
-from node.enums import (FilesAndFoldersOperations,
-                        PublicFilesAndFoldersOperations, TrashOperations)
+from node.enums import TrashOperations
 from util.dict_formatter import form_dict_to_request
-from util.file_encoder import download_file
 
 
 class Trash:
@@ -21,7 +19,6 @@ class Trash:
     def __init__(self, access_token: str) -> None:
         
         self.access_token: str = access_token
-        
         self.base_headers: Dict[str, str] = {
             'Authorization': f'OAuth {self.access_token}',
             'Accept': 'application/json',
@@ -50,7 +47,7 @@ class Trash:
             headers=self.base_headers,
             params=params,
         )
-        response = await get_trash_contents.execute()
+        response: Response = await get_trash_contents.execute()
         
         return response.json()
     
@@ -64,7 +61,7 @@ class Trash:
             headers=self.base_headers,
             params=params,
         )
-        response = await restore_resource.execute()
+        response: Response = await restore_resource.execute()
         
         return response.json()
     
@@ -78,12 +75,14 @@ class TrashProcess:
             properties: Dict[str, Any],
             json: NodeRunContext,
             ) -> None:
+        
         self.json: NodeRunContext = json
         self.operation = operation
         self.trash = trash
         self.properties = properties
         
-    async def execute(self):
+    async def execute(self) -> None:
+        
         if self.operation == TrashOperations.empty_trash:
             await self.__empty_trash()
         
@@ -93,20 +92,24 @@ class TrashProcess:
         if self.operation == TrashOperations.restore_resource:
             await self.__restore_resource()
         
-    async def __empty_trash(self):
-        params = form_dict_to_request(
-            self.properties['empty_trash_params'])
+    async def __empty_trash(self) -> None:
         
-        response = await self.trash.empty_trash(params)
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['empty_trash_params'],
+        )
+        response: Response = await self.trash.empty_trash(params)
+        
         if response.status_code == 204:
             await self.json.save_result({'message': 'success'})
         else:
             await self.json.save_result(response.json())
 
-    async def __get_trash_contents(self):
-        path = self.properties['get_trash_contents_path']
-        params = form_dict_to_request(
-            self.properties['get_trash_contents_params'])
+    async def __get_trash_contents(self) -> None:
+        
+        path: str = self.properties['get_trash_contents_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_trash_contents_params'],
+        )
         
         if params.get('path'):
             params['path'] = path
@@ -115,13 +118,13 @@ class TrashProcess:
         
         await self.json.save_result(response)
 
-    async def __restore_resource(self):
+    async def __restore_resource(self) -> None:
+        
         path = self.properties['restore_resource_path']
         params = form_dict_to_request(
-            self.properties['restore_resource_params'])
-        
+            self.properties['restore_resource_params'],
+        )
         params['path'] = path
-        print(params)
         response = await self.trash.restore_resource(params)
         
         await self.json.save_result(response)

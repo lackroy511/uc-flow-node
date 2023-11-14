@@ -1,12 +1,11 @@
 
-
 from typing import Any, Dict, List
 
 
 def form_dict_to_request(
         dictionary: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
     """
-    Функция принимает словарь с фильтрами для запроса списка клиентов.
+    Функция принимает словарь с параметрами для запроса.
     Возвращает подготовленный для запроса словарь.
     """
     new_dict = {}

@@ -29,7 +29,6 @@ class FilesAndFolders:
     def __init__(self, access_token: str) -> None:
         
         self.access_token: str = access_token
-        
         self.base_headers: Dict[str, str] = {
             'Authorization': f'OAuth {self.access_token}',
             'Accept': 'application/json',
@@ -40,7 +39,6 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}'   
-        
         delete: Request = Request(
             url=api_url,
             method=Request.Method.delete,
@@ -53,14 +51,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}'   
-        
         meta_info: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await meta_info.execute()
+        response: Response = await meta_info.execute()
 
         return response.json()
     
@@ -70,15 +67,14 @@ class FilesAndFolders:
             body: Dict[str, str]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}'   
-        
-        meta_info: Request = Request(
+        update_meta_info: Request = Request(
             url=api_url,
             method=Request.Method.patch,
             headers=self.base_headers,
             params=params,
             data=python_json.dumps(body),
         )
-        response = await meta_info.execute()
+        response: Response = await update_meta_info.execute()
 
         return response.json()
     
@@ -86,14 +82,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}'   
-        
         create_folder: Request = Request(
             url=api_url,
             method=Request.Method.put,
             headers=self.base_headers,
             params=params,
         )
-        response = await create_folder.execute()
+        response: Response = await create_folder.execute()
 
         return response.json()
     
@@ -101,14 +96,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.COPY_FILE_OR_FOLDER}'      
-        
         copy: Request = Request(
             url=api_url,
             method=Request.Method.post,
             headers=self.base_headers,
             params=params,
         )
-        response = await copy.execute()
+        response: Response = await copy.execute()
 
         return response.json()
     
@@ -116,14 +110,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FILE_IN_BASE64}'      
-        
         get_file: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await get_file.execute()
+        response: Response = await get_file.execute()
 
         return response.json()
     
@@ -131,14 +124,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FLAT_LIST}'   
-        
         flat_list: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await flat_list.execute()
+        response: Response = await flat_list.execute()
         
         return response.json()
     
@@ -147,14 +139,13 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}' + \
                        f'{self.RequestType.GET_FLAT_LIST_ORDER_BY_DATE}'   
-        
         flat_list: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await flat_list.execute()
+        response: Response = await flat_list.execute()
         
         return response.json()
     
@@ -162,14 +153,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.MOVE_FILE_OR_FOLDER}'      
-        
         move_file: Request = Request(
             url=api_url,
             method=Request.Method.post,
             headers=self.base_headers,
             params=params,
         )
-        response = await move_file.execute()
+        response: Response = await move_file.execute()
 
         return response.json()
     
@@ -178,14 +168,13 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}' + \
                        f'{self.RequestType.GET_PUBLIC_RESOURCE_LIST}'   
-        
         public_resource_list: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await public_resource_list.execute()
+        response: Response = await public_resource_list.execute()
         
         return response.json()
     
@@ -193,14 +182,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.PUBLISH_RESOURCE}'      
-        
         publish: Request = Request(
             url=api_url,
             method=Request.Method.put,
             headers=self.base_headers,
             params=params,
         )
-        response = await publish.execute()
+        response: Response = await publish.execute()
 
         return response.json()
     
@@ -208,14 +196,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.UNPUBLISH_RESOURCE}'      
-        
         unpublish: Request = Request(
             url=api_url,
             method=Request.Method.put,
             headers=self.base_headers,
             params=params,
         )
-        response = await unpublish.execute()
+        response: Response = await unpublish.execute()
 
         return response.json()
     
@@ -223,14 +210,13 @@ class FilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.GET_UPLOAD_LINK}'      
-        
-        unpublish: Request = Request(
+        get_upload_link: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await unpublish.execute()
+        response: Response = await get_upload_link.execute()
 
         return response.json()
     
@@ -244,14 +230,13 @@ class FilesAndFolders:
             'url': download_link,
             'path': self.BASE_DIR_OF_DISK + file_name,
         }
-        
         upload_file: Request = Request(
             url=api_url,
             method=Request.Method.post,
             headers=self.base_headers,
             params=params,
         )
-        response = await upload_file.execute()
+        response: Response = await upload_file.execute()
         
         return response.json()
 
@@ -271,7 +256,7 @@ class FilesAndFoldersProcess:
         self.files_and_folders = files_and_folders
         self.properties = properties
     
-    async def execute(self):
+    async def execute(self) -> None:
         if self.operation == FilesAndFoldersOperations.del_file_or_folder:
             await self.__del_file_or_folder()
         
@@ -318,12 +303,15 @@ class FilesAndFoldersProcess:
     
     async def __del_file_or_folder(self) -> None:
         
-        path = self.properties['path_to_delete']
-        params = form_dict_to_request(self.properties['delete_params'])
+        path: str = self.properties['path_to_delete']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['delete_params'],
+        )
         params['path'] = path
         
-        response = await self.files_and_folders.del_file_or_folder(
-            params)
+        response: Response = await self.files_and_folders.del_file_or_folder(
+            params,
+        )
         
         if response.status_code == 204:
             await self.json.save_result({'message': 'success'})
@@ -332,59 +320,72 @@ class FilesAndFoldersProcess:
     
     async def __get_meta_info(self) -> None:
         
-        path = self.properties['get_meta_info_path']
-        params = form_dict_to_request(
-            self.properties['get_meta_info_params'])
+        path: str = self.properties['get_meta_info_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_meta_info_params'],
+        )
         params['path'] = path
 
-        response = await self.files_and_folders.get_meta_info(
-            params)
+        response: Response = await self.files_and_folders.get_meta_info(
+            params,
+        )
         
         await self.json.save_result(response)
     
     async def __update_meta_info(self) -> None:
         
-        path = self.properties['update_meta_info_path']
-        params = form_dict_to_request(
-            self.properties['update_meta_info_params'])
+        path: str = self.properties['update_meta_info_path']
+        body: Dict[str, Any] = self.properties['body']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['update_meta_info_params'],
+        )
         params['path'] = path
-        body = self.properties['body']
         
-        response = await self.files_and_folders.update_meta_info(
-            params=params, body=body,
+        response: Response = await self.files_and_folders.update_meta_info(
+            params=params, 
+            body=body,
         )
         await self.json.save_result(response)
 
     async def __create_folder(self) -> None:
         
-        path = self.properties['create_folder_path']
-        params = form_dict_to_request(
-            self.properties['create_folder_params'])
+        path: str = self.properties['create_folder_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['create_folder_params'],
+        )
         params['path'] = path
         
-        response = await self.files_and_folders.create_folder(params)
+        response: Response = await self.files_and_folders.create_folder(
+            params,
+        )
         await self.json.save_result(response)
     
     async def __copy_file_or_folder(self) -> None:
         
-        path_from = self.properties['copy_from_path']
-        path_to = self.properties['copy_to_path']
-        params = form_dict_to_request(
-            self.properties['copy_file_or_folder_params'])
+        path_from: str = self.properties['copy_from_path']
+        path_to: str = self.properties['copy_to_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['copy_file_or_folder_params'],
+        )
         params['from'] = path_from
         params['path'] = path_to
         
-        response = await self.files_and_folders.copy_file_or_folder(params)
+        response = await self.files_and_folders.copy_file_or_folder(
+            params,
+        )
         await self.json.save_result(response)
     
     async def __get_file_in_base64(self) -> None:
         
-        path = self.properties['get_file_in_base64_path']
-        params = form_dict_to_request(
-            self.properties['get_file_in_base64_params'])
+        path: str = self.properties['get_file_in_base64_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_file_in_base64_params'],
+        )
         params['path'] = path
         
-        response = await self.files_and_folders.get_file_in_base64(params)
+        response: Response = await self.files_and_folders.get_file_in_base64(
+            params,
+        )
         
         if response.get('href'):
             url = response.get('href')
@@ -395,72 +396,91 @@ class FilesAndFoldersProcess:
     
     async def __get_flat_list(self) -> None:
         
-        params = form_dict_to_request(
-            self.properties['get_flat_list_params'])
-        flat_list = await self.files_and_folders.get_flat_list(params)
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_flat_list_params'],
+        )
+        flat_list: Dict[str, Any] = await self.files_and_folders.get_flat_list(
+            params,
+        )
 
         await self.json.save_result(flat_list)
         
     async def __get_flat_list_ordered_by_date(self) -> None:
         
-        params = form_dict_to_request(
-            self.properties['get_flat_list_ordered_by_date_params'])
-        flat_list = await self.files_and_folders.get_flat_list_ordered_by_date(
-            params,
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_flat_list_ordered_by_date_params'],
         )
+        flat_list: Dict[str, Any] = \
+            await self.files_and_folders.get_flat_list_ordered_by_date(
+                params,
+            )
 
         await self.json.save_result(flat_list)
     
     async def __move_file_or_folder(self) -> None:
         
-        path_from = self.properties['move_from_path']
-        path_to = self.properties['move_to_path']
-        params = form_dict_to_request(
-            self.properties['move_file_or_folder_params'])
+        path_from: str = self.properties['move_from_path']
+        path_to: str = self.properties['move_to_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['move_file_or_folder_params'],
+        )
         params['from'] = path_from
         params['path'] = path_to
         
-        response = await self.files_and_folders.move_file_or_folder(params)
+        response: Response = await self.files_and_folders.move_file_or_folder(
+            params,
+        )
         await self.json.save_result(response)
     
     async def __get_public_resource_list(self) -> None:
         
-        params = form_dict_to_request(
-            self.properties['get_public_resource_list_params'])
-        flat_list = await self.files_and_folders.get_public_resource_list(
-            params,
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_public_resource_list_params'],
         )
+        resource_list: Dict[str, Any] = \
+            await self.files_and_folders.get_public_resource_list(
+                params,
+            )
 
-        await self.json.save_result(flat_list)
+        await self.json.save_result(resource_list)
     
     async def __publish_resource(self) -> None:
         
-        path = self.properties['publish_resource_path']
-        params = form_dict_to_request(
-            self.properties['publish_resource_params'])
+        path: str = self.properties['publish_resource_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['publish_resource_params'],
+        )
         params['path'] = path
         
-        response = await self.files_and_folders.publish_resource(params)
+        response: Response = await self.files_and_folders.publish_resource(
+            params,
+        )
         await self.json.save_result(response)
         
     async def __unpublish_resource(self) -> None:
         
-        path = self.properties['unpublish_resource_path']
-        params = form_dict_to_request(
-            self.properties['unpublish_resource_params'])
+        path: str = self.properties['unpublish_resource_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['unpublish_resource_params'],
+        )
         params['path'] = path
         
-        response = await self.files_and_folders.unpublish_resource(params)
+        response: Response = await self.files_and_folders.unpublish_resource(
+            params,
+        )
         await self.json.save_result(response)
     
     async def __get_upload_link(self) -> None:
         
-        path = self.properties['get_upload_link_path']
-        params = form_dict_to_request(
-            self.properties['get_upload_link_params'])
+        path: str = self.properties['get_upload_link_path']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_upload_link_params'],
+        )
         params['path'] = path
         
-        response = await self.files_and_folders.get_upload_link(params)
+        response: Response = await self.files_and_folders.get_upload_link(
+            params,
+        )
         await self.json.save_result(response)
     
     async def __upload_file(self) -> None:
@@ -468,7 +488,9 @@ class FilesAndFoldersProcess:
         download_link: str = self.properties['download_link']
         file_name: str = self.properties['file_name']
         
-        response = \
+        response: Response = \
             await self.files_and_folders.upload_from_inet_to_disk(
-                download_link, file_name)
+                download_link, 
+                file_name,
+            )
         await self.json.save_result(response)

@@ -85,6 +85,7 @@ class MainProcess:
             self.ya_disk_token,
         )
         operation: str = self.properties['public_files_and_folders_operations']
+        
         process = PublicFilesAndFoldersProcess(
             operation, 
             public_files_and_folders, 
