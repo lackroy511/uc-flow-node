@@ -1,13 +1,10 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import (AsyncOpOperations, CopyFileOrFolderParams,
-                        CreateFolderParams, DelFileOrFolderParams,
-                        FilesAndFoldersOperations, GetFileInBase64Params,
-                        GetMetaInfoParams, MediaTypes, Params, PreviewSizes,
+from node.enums import (AsyncOpOperations,
+                        FilesAndFoldersOperations,
+                        MediaTypes, Params, PreviewSizes,
                         PublicFilesAndFoldersOperations,
-                        PublicFilesAndFoldersParams, Resources,
-                        TrashOperations, TrashParams, UpdateMetaInfoParams,
-                        UserDiskOptions)
+                        Resources, TrashOperations, UserDiskOptions)
 
 property_user_disk_params = Property(
     displayName='Params',
@@ -49,13 +46,13 @@ property_delete_params = Property(
     options=[
         Property(
             displayName='Permanently',
-            name=DelFileOrFolderParams.permanently,
+            name=Params.permanently,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Permanently',
-                    name=DelFileOrFolderParams.permanently,
+                    name=Params.permanently,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='признак безвозвратного удаления',
@@ -64,13 +61,13 @@ property_delete_params = Property(
         ),
         Property(
             displayName='Fields',
-            name=DelFileOrFolderParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=DelFileOrFolderParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -79,13 +76,13 @@ property_delete_params = Property(
         ),
         Property(
             displayName='Force async',
-            name=DelFileOrFolderParams.force_async,
+            name=Params.force_async,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Force async',
-                    name=DelFileOrFolderParams.force_async,
+                    name=Params.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Выполнить асинхронно.',
@@ -94,13 +91,13 @@ property_delete_params = Property(
         ),
         Property(
             displayName='md5',
-            name=DelFileOrFolderParams.md5,
+            name=Params.md5,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='md5',
-                    name=DelFileOrFolderParams.md5,
+                    name=Params.md5,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='md5 удаляемого файла.',
@@ -127,13 +124,13 @@ property_get_meta_info_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=GetMetaInfoParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetMetaInfoParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -142,13 +139,13 @@ property_get_meta_info_params = Property(
         ),
         Property(
             displayName='Limit',
-            name=GetMetaInfoParams.limit,
+            name=Params.limit,
             type=Property.Type.NUMBER,
             default=20,
             values=[
                 Property(
                     displayName='Limit',
-                    name=GetMetaInfoParams.limit,
+                    name=Params.limit,
                     type=Property.Type.NUMBER,
                     default='',
                     placeholder='Количество ресурсов в ответе',
@@ -157,13 +154,13 @@ property_get_meta_info_params = Property(
         ),
         Property(
             displayName='Offset',
-            name=GetMetaInfoParams.offset,
+            name=Params.offset,
             type=Property.Type.NUMBER,
             default='',
             values=[
                 Property(
                     displayName='Offset',
-                    name=GetMetaInfoParams.offset,
+                    name=Params.offset,
                     type=Property.Type.NUMBER,
                     default='',
                     placeholder='Количество ресурсов с начала списка',
@@ -172,13 +169,13 @@ property_get_meta_info_params = Property(
         ),
         Property(
             displayName='Preview size',
-            name=GetMetaInfoParams.preview_size,
+            name=Params.preview_size,
             type=Property.Type.OPTIONS,
             default='',
             values=[
                 Property(
                     displayName='Preview size',
-                    name=GetMetaInfoParams.preview_size,
+                    name=Params.preview_size,
                     type=Property.Type.OPTIONS,
                     default='',
                     placeholder='Размер уменьшенного изображения',
@@ -213,13 +210,13 @@ property_get_meta_info_params = Property(
         ),
         Property(
             displayName='Preview crop',
-            name=GetMetaInfoParams.preview_crop,
+            name=Params.preview_crop,
             type=Property.Type.BOOLEAN,
             default='',
             values=[
                 Property(
                     displayName='Preview crop',
-                    name=GetMetaInfoParams.preview_crop,
+                    name=Params.preview_crop,
                     type=Property.Type.BOOLEAN,
                     default='',
                     placeholder='Обрезать превью согласно размеру',
@@ -228,13 +225,13 @@ property_get_meta_info_params = Property(
         ),
         Property(
             displayName='Sort by',
-            name=GetMetaInfoParams.sort,
+            name=Params.sort,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Sort by',
-                    name=GetMetaInfoParams.sort,
+                    name=Params.sort,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='name,path,created,modified,size ',
@@ -261,13 +258,13 @@ property_update_meta_info_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=UpdateMetaInfoParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=UpdateMetaInfoParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -294,13 +291,13 @@ property_create_folder_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=CreateFolderParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=CreateFolderParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -333,7 +330,7 @@ property_get_flat_list_params = Property(
             values=[
                 Property(
                     displayName='Limit',
-                    name='limit',
+                    name=Params.limit,
                     type=Property.Type.NUMBER,
                     default='',
                     placeholder='Количество файлов в запросе',
@@ -539,13 +536,13 @@ property_copy_file_or_folder_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=CopyFileOrFolderParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=CopyFileOrFolderParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -554,13 +551,13 @@ property_copy_file_or_folder_params = Property(
         ),
         Property(
             displayName='Force Async',
-            name=CopyFileOrFolderParams.force_async,
+            name=Params.force_async,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Force Async',
-                    name=CopyFileOrFolderParams.force_async,
+                    name=Params.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Выполнить асинхронно.',
@@ -569,13 +566,13 @@ property_copy_file_or_folder_params = Property(
         ),
         Property(
             displayName='Overwrite',
-            name=CopyFileOrFolderParams.overwrite,
+            name=Params.overwrite,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Overwrite',
-                    name=CopyFileOrFolderParams.overwrite,
+                    name=Params.overwrite,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Перезаписать ресурс.',
@@ -602,13 +599,13 @@ property_get_file_in_base64_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=GetFileInBase64Params.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -832,13 +829,13 @@ property_move_file_or_folder_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=CopyFileOrFolderParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=CopyFileOrFolderParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -847,13 +844,13 @@ property_move_file_or_folder_params = Property(
         ),
         Property(
             displayName='Force Async',
-            name=CopyFileOrFolderParams.force_async,
+            name=Params.force_async,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Force Async',
-                    name=CopyFileOrFolderParams.force_async,
+                    name=Params.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Список возвращаемых атрибутов.',
@@ -862,13 +859,13 @@ property_move_file_or_folder_params = Property(
         ),
         Property(
             displayName='Overwrite',
-            name=CopyFileOrFolderParams.overwrite,
+            name=Params.overwrite,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Overwrite',
-                    name=CopyFileOrFolderParams.overwrite,
+                    name=Params.overwrite,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Список возвращаемых атрибутов.',
@@ -1039,13 +1036,13 @@ property_publish_resource_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=GetFileInBase64Params.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1072,13 +1069,13 @@ property_unpublish_resource_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=GetFileInBase64Params.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1105,13 +1102,13 @@ property_get_upload_link_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=GetFileInBase64Params.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1120,13 +1117,13 @@ property_get_upload_link_params = Property(
         ),
         Property(
             displayName='Overwrite',
-            name=CopyFileOrFolderParams.overwrite,
+            name=Params.overwrite,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Overwrite',
-                    name=CopyFileOrFolderParams.overwrite,
+                    name=Params.overwrite,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Перезаписать существующий файл.',
@@ -1153,13 +1150,13 @@ property_get_public_meta_info_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=PublicFilesAndFoldersParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1198,13 +1195,13 @@ property_get_public_meta_info_params = Property(
         ),
         Property(
             displayName='Path',
-            name=PublicFilesAndFoldersParams.path,
+            name=Params.path,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Path',
-                    name=PublicFilesAndFoldersParams.path,
+                    name=Params.path,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Путь к ресурсу в публичной папке.',
@@ -1269,13 +1266,13 @@ property_get_public_meta_info_params = Property(
         ),
         Property(
             displayName='Sort by',
-            name=GetMetaInfoParams.sort,
+            name=Params.sort,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Sort by',
-                    name=GetMetaInfoParams.sort,
+                    name=Params.sort,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='name,path,created,modified,size ',
@@ -1302,13 +1299,13 @@ property_get_download_link_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=PublicFilesAndFoldersParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1317,13 +1314,13 @@ property_get_download_link_params = Property(
         ),
         Property(
             displayName='Path',
-            name=PublicFilesAndFoldersParams.path,
+            name=Params.path,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Path',
-                    name=PublicFilesAndFoldersParams.path,
+                    name=Params.path,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Путь к ресурсу в публичной папке.',
@@ -1350,13 +1347,13 @@ property_save_resource_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=PublicFilesAndFoldersParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=GetFileInBase64Params.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Путь к копируемому ресурсу' + 
@@ -1366,13 +1363,13 @@ property_save_resource_params = Property(
         ),
         Property(
             displayName='Force async',
-            name=DelFileOrFolderParams.force_async,
+            name=Params.force_async,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Force async',
-                    name=DelFileOrFolderParams.force_async,
+                    name=Params.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Выполнить асинхронно.',
@@ -1381,13 +1378,13 @@ property_save_resource_params = Property(
         ),
         Property(
             displayName='Name',
-            name=PublicFilesAndFoldersParams.name,
+            name=Params.name,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Name',
-                    name=PublicFilesAndFoldersParams.name,
+                    name=Params.name,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Имя сохраняемого ресурса.',
@@ -1396,13 +1393,13 @@ property_save_resource_params = Property(
         ),
         Property(
             displayName='Path',
-            name=PublicFilesAndFoldersParams.path,
+            name=Params.path,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Path',
-                    name=PublicFilesAndFoldersParams.path,
+                    name=Params.path,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Путь к копируемому ресурсу' + 
@@ -1412,13 +1409,13 @@ property_save_resource_params = Property(
         ),
         Property(
             displayName='Save path',
-            name=PublicFilesAndFoldersParams.save_path,
+            name=Params.save_path,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Save path',
-                    name=PublicFilesAndFoldersParams.save_path,
+                    name=Params.save_path,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Путь к папке, в которую будет' + 
@@ -1446,13 +1443,13 @@ property_empty_trash_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=TrashParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=TrashParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1461,13 +1458,13 @@ property_empty_trash_params = Property(
         ),
         Property(
             displayName='Force async',
-            name=TrashParams.force_async,
+            name=Params.force_async,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Force async',
-                    name=TrashParams.force_async,
+                    name=Params.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Выполнить асинхронно.',
@@ -1476,13 +1473,13 @@ property_empty_trash_params = Property(
         ),
         Property(
             displayName='Path',
-            name=TrashParams.path,
+            name=Params.path,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Path',
-                    name=TrashParams.path,
+                    name=Params.path,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Путь к ресурсу в Корзине.',
@@ -1509,13 +1506,13 @@ property_get_trash_contents_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=TrashParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=TrashParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1524,7 +1521,7 @@ property_get_trash_contents_params = Property(
         ),
         Property(
             displayName='Limit',
-            name=TrashParams.limit,
+            name=Params.limit,
             type=Property.Type.NUMBER,
             default=20,
             values=[
@@ -1539,13 +1536,13 @@ property_get_trash_contents_params = Property(
         ),
         Property(
             displayName='Offset',
-            name=TrashParams.offset,
+            name=Params.offset,
             type=Property.Type.NUMBER,
             default='',
             values=[
                 Property(
                     displayName='Offset',
-                    name=TrashParams.offset,
+                    name=Params.offset,
                     type=Property.Type.NUMBER,
                     default='',
                     placeholder='Количество ресурсов с начала списка',
@@ -1554,13 +1551,13 @@ property_get_trash_contents_params = Property(
         ),
         Property(
             displayName='Preview size',
-            name=TrashParams.preview_size,
+            name=Params.preview_size,
             type=Property.Type.OPTIONS,
             default='',
             values=[
                 Property(
                     displayName='Preview size',
-                    name=TrashParams.preview_size,
+                    name=Params.preview_size,
                     type=Property.Type.OPTIONS,
                     default='',
                     placeholder='Размер уменьшенного изображения',
@@ -1595,13 +1592,13 @@ property_get_trash_contents_params = Property(
         ),
         Property(
             displayName='Preview crop',
-            name=TrashParams.preview_crop,
+            name=Params.preview_crop,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Preview crop',
-                    name=TrashParams.preview_crop,
+                    name=Params.preview_crop,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Обрезать превью согласно размеру',
@@ -1610,13 +1607,13 @@ property_get_trash_contents_params = Property(
         ),
         Property(
             displayName='Sort by',
-            name=TrashParams.sort,
+            name=Params.sort,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Sort by',
-                    name=TrashParams.sort,
+                    name=Params.sort,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='name,path,created,modified,size ',
@@ -1643,13 +1640,13 @@ property_restore_resource_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=TrashParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=TrashParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',
@@ -1658,13 +1655,13 @@ property_restore_resource_params = Property(
         ),
         Property(
             displayName='Force async',
-            name=TrashParams.force_async,
+            name=Params.force_async,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Force async',
-                    name=TrashParams.force_async,
+                    name=Params.force_async,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Выполнить асинхронно.',
@@ -1673,13 +1670,13 @@ property_restore_resource_params = Property(
         ),
         Property(
             displayName='Name',
-            name=TrashParams.name,
+            name=Params.name,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Name',
-                    name=TrashParams.name,
+                    name=Params.name,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Имя восстановленного ресурса.',
@@ -1688,13 +1685,13 @@ property_restore_resource_params = Property(
         ),
         Property(
             displayName='Overwrite',
-            name=TrashParams.overwrite,
+            name=Params.overwrite,
             type=Property.Type.BOOLEAN,
             default=False,
             values=[
                 Property(
                     displayName='Overwrite',
-                    name=TrashParams.overwrite,
+                    name=Params.overwrite,
                     type=Property.Type.BOOLEAN,
                     default=False,
                     placeholder='Перезаписать ресурс восстанавливаемым.',
@@ -1721,13 +1718,13 @@ property_get_operation_status_params = Property(
     options=[
         Property(
             displayName='Fields',
-            name=TrashParams.fields,
+            name=Params.fields,
             type=Property.Type.STRING,
             default='',
             values=[
                 Property(
                     displayName='Fields',
-                    name=TrashParams.fields,
+                    name=Params.fields,
                     type=Property.Type.STRING,
                     default='',
                     placeholder='Список полей в ответе',

@@ -68,42 +68,6 @@ class MediaTypes(str, Enum):
     web = 'web'
 
 
-class DelFileOrFolderParams(str, Enum):
-    path = 'path'
-    permanently = 'permanently'
-    fields = 'fields'
-    force_async = 'force_async'
-    md5 = 'md5'
-
-
-class GetMetaInfoParams(str, Enum):
-    path = 'path'
-    fields = 'fields'
-    limit = 'limit'
-    offset = 'offset'
-    preview_crop = 'preview_crop'
-    preview_size = 'preview_size'
-    sort = 'sort'
-
-
-class UpdateMetaInfoParams(str, Enum):
-    fields = 'fields' 
-
-
-class CreateFolderParams(str, Enum):
-    fields = 'fields' 
-
-
-class CopyFileOrFolderParams(str, Enum):
-    fields = 'fields'
-    force_async = 'force_async'
-    overwrite = 'overwrite'
-
-
-class GetFileInBase64Params(str, Enum):
-    fields = 'fields'
-
-
 class Params(str, Enum):
     limit = 'limit'
     media_type = 'media_type'
@@ -111,27 +75,15 @@ class Params(str, Enum):
     fields = 'fields'
     preview_size = 'preview_size'
     preview_crop = 'preview_crop'
-
-
-class PublicFilesAndFoldersParams(str, Enum):
-    fields = 'fields'
     path = 'path'
+    permanently = 'permanently'
+    force_async = 'force_async'
+    md5 = 'md5'
     save_path = 'save_path'
     name = 'name'
-
-
-class TrashParams(str, Enum):
-    fields = 'fields'
-    force_async = 'force_async'
-    path = 'path'
-    limit = 'limit'
-    offset = 'offset'
-    preview_crop = 'preview_crop'
-    preview_size = 'preview_size'
     sort = 'sort'
     overwrite = 'overwrite'
-    name = 'name'
-    
+
     
 class PreviewSizes(str, Enum):
     S_SIZE = 'S'
