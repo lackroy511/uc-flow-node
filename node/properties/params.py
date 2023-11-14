@@ -1,13 +1,13 @@
 from uc_flow_schemas.flow import DisplayOptions, OptionValue, Property
 
-from node.enums import (AsyncOpOperations, CopyFileOrFolderParams, 
-                        CreateFolderParams,
-                        DelFileOrFolderParams, FilesAndFoldersOperations,
-                        GetFileInBase64Params, GetMetaInfoParams, MediaTypes,
-                        Params, PreviewSizes, PublicFilesAndFoldersOperations,
-                        PublicFilesAndFoldersParams, Resources, 
-                        TrashOperations, TrashParams,
-                        UpdateMetaInfoParams, UserDiskOptions)
+from node.enums import (AsyncOpOperations, CopyFileOrFolderParams,
+                        CreateFolderParams, DelFileOrFolderParams,
+                        FilesAndFoldersOperations, GetFileInBase64Params,
+                        GetMetaInfoParams, MediaTypes, Params, PreviewSizes,
+                        PublicFilesAndFoldersOperations,
+                        PublicFilesAndFoldersParams, Resources,
+                        TrashOperations, TrashParams, UpdateMetaInfoParams,
+                        UserDiskOptions)
 
 property_user_disk_params = Property(
     displayName='Params',

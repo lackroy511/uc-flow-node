@@ -17,6 +17,7 @@ from util.path_encoder import encode_path_to_url_format
 from ya_disk_api.async_operation import AsyncOperation, AsyncOperationProcess
 from ya_disk_api.files_and_folders import (FilesAndFolders,
                                            FilesAndFoldersProcess)
+from ya_disk_api.main_process import MainProcess
 from ya_disk_api.public_files_and_folders import (PublicFilesAndFolders,
                                                   PublicFilesAndFoldersProcess)
 from ya_disk_api.trash import Trash, TrashProcess
@@ -35,45 +36,13 @@ class ExecuteView(execute.Execute):
             ya_disk_token = properties['api_token']
             resource = properties['resource']
             
-            if resource == Resources.user_disk:
-                user_disk = UserDisk(ya_disk_token)
-                operation = properties['user_disk_operations']
-                
-                process = UserDiskProcess(
-                    operation, user_disk, properties, json)
-                await process.execute()
-                
-            if resource == Resources.files_and_folders:
-                files_and_folders = FilesAndFolders(ya_disk_token)
-                operation = properties['files_and_folders_operations']
-                
-                process = FilesAndFoldersProcess(
-                    operation, files_and_folders, properties, json)
-                await process.execute()
-            
-            if resource == Resources.public_files_and_folders:
-                public_files_and_folders = PublicFilesAndFolders(ya_disk_token)
-                operation = properties['public_files_and_folders_operations']
-                
-                process = PublicFilesAndFoldersProcess(
-                    operation, public_files_and_folders, properties, json)
-                await process.execute()
-            
-            if resource == Resources.trash:
-                trash = Trash(ya_disk_token)
-                operation = properties['trash_operations']
-                
-                process = TrashProcess(
-                    operation, trash, properties, json)
-                await process.execute()
-            
-            if resource == Resources.async_operation:
-                async_operation = AsyncOperation(ya_disk_token)
-                operation = properties['async_operation_operations']
-                
-                process = AsyncOperationProcess(
-                    operation, async_operation, properties, json)
-                await process.execute()
+            main_process = MainProcess(
+                ya_disk_token,
+                resource,
+                properties,
+                json,
+            )
+            await main_process.execute()
             
             json.state = RunState.complete
                 
