@@ -53,11 +53,11 @@ class AsyncOperationProcess:
         self.async_operation = async_operation
         self.properties = properties
         
-    async def execute(self):
+    async def execute(self) -> None:
         if self.operation == AsyncOpOperations.get_operation_status:
             await self.__get_operation_status()
     
-    async def __get_operation_status(self):
+    async def __get_operation_status(self) -> None:
         operation_id = self.properties['operation_id']
         params = form_dict_to_request(
             self.properties['get_operation_status_params'])

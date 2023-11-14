@@ -88,7 +88,7 @@ class PublicFilesAndFoldersProcess:
         self.public_files_and_folders = public_files_and_folders
         self.properties = properties
         
-    async def execute(self):
+    async def execute(self) -> None:
         if self.operation == PublicFilesAndFoldersOperations.get_meta_info:
             await self.__get_meta_info()
         
@@ -98,7 +98,7 @@ class PublicFilesAndFoldersProcess:
         if self.operation == PublicFilesAndFoldersOperations.save_resource:
             await self.__save_resource()
             
-    async def __get_meta_info(self):
+    async def __get_meta_info(self) -> None:
         public_key = self.properties['get_meta_info_public_key']
         params = form_dict_to_request(
             self.properties['get_public_meta_info_params'])
@@ -108,7 +108,7 @@ class PublicFilesAndFoldersProcess:
         
         await self.json.save_result(meta_info)
 
-    async def __get_download_link(self):
+    async def __get_download_link(self) -> None:
         public_key = self.properties['get_download_link_public_key']
         params = form_dict_to_request(
             self.properties['get_download_link_params'])
@@ -118,7 +118,7 @@ class PublicFilesAndFoldersProcess:
         
         await self.json.save_result(meta_info)
 
-    async def __save_resource(self):
+    async def __save_resource(self) -> None:
         public_key = self.properties['save_resource_public_key']
         params = form_dict_to_request(
             self.properties['save_resource_params'])

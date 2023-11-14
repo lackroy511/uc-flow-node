@@ -83,7 +83,7 @@ class TrashProcess:
         self.trash = trash
         self.properties = properties
         
-    async def execute(self):
+    async def execute(self) -> None:
         if self.operation == TrashOperations.empty_trash:
             await self.__empty_trash()
         
@@ -93,7 +93,7 @@ class TrashProcess:
         if self.operation == TrashOperations.restore_resource:
             await self.__restore_resource()
         
-    async def __empty_trash(self):
+    async def __empty_trash(self) -> None:
         params = form_dict_to_request(
             self.properties['empty_trash_params'])
         
@@ -103,7 +103,7 @@ class TrashProcess:
         else:
             await self.json.save_result(response.json())
 
-    async def __get_trash_contents(self):
+    async def __get_trash_contents(self) -> None:
         path = self.properties['get_trash_contents_path']
         params = form_dict_to_request(
             self.properties['get_trash_contents_params'])
@@ -115,7 +115,7 @@ class TrashProcess:
         
         await self.json.save_result(response)
 
-    async def __restore_resource(self):
+    async def __restore_resource(self) -> None:
         path = self.properties['restore_resource_path']
         params = form_dict_to_request(
             self.properties['restore_resource_params'])

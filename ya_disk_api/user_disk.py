@@ -27,13 +27,13 @@ class UserDisk:
         
         api_url: str = f'{self.BASE_URL}'   
         
-        flat_list: Request = Request(
+        meta_info: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await flat_list.execute()
+        response = await meta_info.execute()
         
         return response.json()
 
@@ -53,11 +53,11 @@ class UserDiskProcess:
         self.user_disk = user_disk
         self.properties = properties
         
-    async def execute(self):
+    async def execute(self) -> None:
         if self.operation == UserDiskOptions.get_meta_info:
             await self.__get_meta_info()
     
-    async def __get_meta_info(self):
+    async def __get_meta_info(self) -> None:
         params = form_dict_to_request(self.properties['user_disk_params'])
         meta_info = await self.user_disk.get_meta_info(params)
         

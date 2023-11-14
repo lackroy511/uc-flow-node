@@ -71,14 +71,14 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}'   
         
-        meta_info: Request = Request(
+        update_meta_info: Request = Request(
             url=api_url,
             method=Request.Method.patch,
             headers=self.base_headers,
             params=params,
             data=python_json.dumps(body),
         )
-        response = await meta_info.execute()
+        response = await update_meta_info.execute()
 
         return response.json()
     
@@ -224,13 +224,13 @@ class FilesAndFolders:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.GET_UPLOAD_LINK}'      
         
-        unpublish: Request = Request(
+        get_upload_link: Request = Request(
             url=api_url,
             method=Request.Method.get,
             headers=self.base_headers,
             params=params,
         )
-        response = await unpublish.execute()
+        response = await get_upload_link.execute()
 
         return response.json()
     
@@ -271,7 +271,7 @@ class FilesAndFoldersProcess:
         self.files_and_folders = files_and_folders
         self.properties = properties
     
-    async def execute(self):
+    async def execute(self) -> None:
         if self.operation == FilesAndFoldersOperations.del_file_or_folder:
             await self.__del_file_or_folder()
         
