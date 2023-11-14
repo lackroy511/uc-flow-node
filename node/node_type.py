@@ -42,15 +42,16 @@ from node.properties.public_keys import (property_get_download_link_public_key,
                                          property_save_resource_public_key)
 from node.properties.unique import (property_body, property_download_link,
                                     property_file_name, property_operation_id)
+from static.icon import ICON
 
 
 class NodeType(flow.NodeType):
     id: str = 'ee1acfd5-ff91-49ec-92fd-072fb39b61ce'
     type: flow.NodeType.Type = flow.NodeType.Type.action
-    name: str = 'my_service'
-    displayName: str = 'my_service'
-    icon: str = '<svg><text x="8" y="50" font-size="50">🦥</text></svg>'
-    description: str = 'my_service'
+    name: str = 'yandex_disk_api'
+    displayName: str = 'Yandex Disk API'
+    icon: str = ICON
+    description: str = 'Yandex Disk API'
     properties: List[Property] = [
         Property(
             displayName='API token',
