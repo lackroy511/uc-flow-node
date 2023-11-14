@@ -1,9 +1,10 @@
 import base64
+from typing import Dict
 
 import aiohttp
 
 
-async def download_file(download_link: str) -> str:
+async def download_file(download_link: str) -> Dict[str, str]:
     """Скачивает файл и возвращает его в формате base64, utf-8"""
     async with aiohttp.ClientSession() as session:
         async with session.get(download_link) as response:
