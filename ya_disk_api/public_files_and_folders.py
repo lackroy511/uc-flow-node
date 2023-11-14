@@ -33,7 +33,6 @@ class PublicFilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}'   
-        
         meta_info: Request = Request(
             url=api_url,
             method=Request.Method.get,
@@ -41,13 +40,13 @@ class PublicFilesAndFolders:
             params=params,
         )
         response: Response = await meta_info.execute()
+        
         return response.json()
 
     async def get_download_link(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.GET_DOWNLOAD_LINK}'   
-        
         download_link: Request = Request(
             url=api_url,
             method=Request.Method.get,
@@ -62,7 +61,6 @@ class PublicFilesAndFolders:
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
         api_url: str = f'{self.BASE_URL}{self.RequestType.SAVE_RESOURCE}'   
-        
         download_link: Request = Request(
             url=api_url,
             method=Request.Method.post,
@@ -99,31 +97,46 @@ class PublicFilesAndFoldersProcess:
             await self.__save_resource()
             
     async def __get_meta_info(self) -> None:
-        public_key = self.properties['get_meta_info_public_key']
-        params = form_dict_to_request(
-            self.properties['get_public_meta_info_params'])
+        
+        public_key: str = self.properties['get_meta_info_public_key']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_public_meta_info_params'],
+        )
         params['public_key'] = public_key
         
-        meta_info = await self.public_files_and_folders.get_meta_info(params)
+        response: Dict[str, Any] = \
+            await self.public_files_and_folders.get_meta_info(
+                params,
+            )
         
-        await self.json.save_result(meta_info)
+        await self.json.save_result(response)
 
     async def __get_download_link(self) -> None:
-        public_key = self.properties['get_download_link_public_key']
-        params = form_dict_to_request(
-            self.properties['get_download_link_params'])
-        params['public_key'] = public_key
-        meta_info = await self.public_files_and_folders.get_download_link(
-            params)
         
-        await self.json.save_result(meta_info)
+        public_key: str = self.properties['get_download_link_public_key']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['get_download_link_params'],
+        )
+        params['public_key'] = public_key
+        
+        response: Dict[str, Any] = \
+            await self.public_files_and_folders.get_download_link(
+                params,
+            )
+        
+        await self.json.save_result(response)
 
     async def __save_resource(self) -> None:
-        public_key = self.properties['save_resource_public_key']
-        params = form_dict_to_request(
-            self.properties['save_resource_params'])
-        params['public_key'] = public_key
-        meta_info = await self.public_files_and_folders.save_resource(
-            params)
         
-        await self.json.save_result(meta_info)
+        public_key: str = self.properties['save_resource_public_key']
+        params: Dict[str, Any] = form_dict_to_request(
+            self.properties['save_resource_params'],
+        )
+        params['public_key'] = public_key
+        
+        response: Dict[str, Any] = \
+            await self.public_files_and_folders.save_resource(
+                params,
+            )
+        
+        await self.json.save_result(response)
