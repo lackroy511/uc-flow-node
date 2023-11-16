@@ -39,17 +39,13 @@ class FilesAndFolders(BaseYaDiskAPI):
     
     async def get_meta_info(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}'   
-        meta_info: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+         
+        meta_info: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
         )
-        response: Response = await meta_info.execute()
-
-        return response.json()
+        return ujson.loads(meta_info['content'])
     
     async def update_meta_info(
             self, 
