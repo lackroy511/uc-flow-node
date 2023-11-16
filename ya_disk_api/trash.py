@@ -1,4 +1,4 @@
-import json as python_json
+import ujson
 from typing import Any, Dict
 
 from uc_flow_nodes.schemas import NodeRunContext
@@ -6,65 +6,47 @@ from uc_http_requester.requester import Request, Response
 
 from node.enums import TrashOperations
 from util.dict_formatter import form_dict_to_request
+from ya_disk_api.yandex_disk_api import BaseYaDiskAPI
 
 
-class Trash:
+class Trash(BaseYaDiskAPI):
     
     class RequestType:
         RESTORE = 'restore'
         
-    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/trash/resources/'
-    BASE_DIR_OF_DISK = 'disk:/'
-    
-    def __init__(self, access_token: str) -> None:
-        
-        self.access_token: str = access_token
-        self.base_headers: Dict[str, str] = {
-            'Authorization': f'OAuth {self.access_token}',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
+    base_url = 'https://cloud-api.yandex.net/v1/disk/trash/resources/'
 
     async def empty_trash(
             self, params: Dict[str, Any]) -> Response:
         
-        api_url: str = f'{self.BASE_URL}'   
-        empty_trash: Request = Request(
-            url=api_url,
-            method=Request.Method.delete,
-            headers=self.base_headers,
+        empty_trash: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.delete,
         )
-        return await empty_trash.execute()
+        return empty_trash
 
     async def get_trash_contents(
             self, params: Dict[str, Any]) -> Response:
-        
-        api_url: str = f'{self.BASE_URL}'   
-        get_trash_contents: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+ 
+        get_trash_contents: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
         )
-        response: Response = await get_trash_contents.execute()
-        
-        return response.json()
+        return ujson.loads(get_trash_contents['content'])
     
     async def restore_resource(
             self, params: Dict[str, Any]) -> Response:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.RESTORE}'   
-        restore_resource: Request = Request(
-            url=api_url,
-            method=Request.Method.put,
-            headers=self.base_headers,
+           
+        restore_resource: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.put,
+            request_type=self.RequestType.RESTORE,
         )
-        response: Response = await restore_resource.execute()
-        
-        return response.json()
-    
+        return ujson.loads(restore_resource['content'])
+
     
 class TrashProcess:
     
@@ -99,10 +81,10 @@ class TrashProcess:
         )
         response: Response = await self.trash.empty_trash(params)
         
-        if response.status_code == 204:
+        if response['status_code'] == 204:
             await self.json.save_result({'message': 'success'})
         else:
-            await self.json.save_result(response.json())
+            await self.json.save_result(ujson.loads(response['content']))
 
     async def __get_trash_contents(self) -> None:
         
