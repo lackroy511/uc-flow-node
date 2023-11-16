@@ -22,7 +22,6 @@ class UserDisk(BaseYaDiskAPI):
             params=params,
             method=Request.Method.get,
         )
-        
         return ujson.loads(meta_info['content'])
 
 

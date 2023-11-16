@@ -1,4 +1,5 @@
 from typing import Dict
+import json as python_json
 from uc_http_requester.requester import Request, Response
 from uc_flow_nodes.schemas import NodeRunContext
 
@@ -19,6 +20,8 @@ class BaseYaDiskAPI:
             json: NodeRunContext,
             params: Dict[str, str],
             method: str,
+            headers: Dict[str, str] = None,
+            data: Dict[str, str] = None,
             request_type: str = None,
             operation_id: str = None) -> Response:
         
@@ -27,7 +30,8 @@ class BaseYaDiskAPI:
         response: Response = await json.requester.request(
             Request(
                 url=api_url,
-                headers=self.base_headers,
+                headers=self.base_headers if headers is None else headers,
+                data=python_json.dumps(data) if data else {},
                 method=method,
                 params=params,
                 auth=json.credential_id,

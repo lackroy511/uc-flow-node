@@ -50,181 +50,142 @@ class FilesAndFolders(BaseYaDiskAPI):
     async def update_meta_info(
             self, 
             params: Dict[str, Any], 
-            body: Dict[str, str]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}'   
-        update_meta_info: Request = Request(
-            url=api_url,
+            data: Dict[str, str]) -> Dict[str, Any]:
+         
+        update_meta_info: Request = await self.make_request(
+            json=self.json,
             method=Request.Method.patch,
-            headers=self.base_headers,
             params=params,
-            data=python_json.dumps(body),
+            data=data,
         )
-        response: Response = await update_meta_info.execute()
 
-        return response.json()
+        return ujson.loads(update_meta_info['content'])
     
     async def create_folder(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
-        api_url: str = f'{self.BASE_URL}'   
-        create_folder: Request = Request(
-            url=api_url,
-            method=Request.Method.put,
-            headers=self.base_headers,
+        create_folder: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.put,
         )
-        response: Response = await create_folder.execute()
-
-        return response.json()
+        return ujson.loads(create_folder['content'])
     
     async def copy_file_or_folder(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
-        api_url: str = f'{self.BASE_URL}{self.RequestType.COPY_FILE_OR_FOLDER}'      
-        copy: Request = Request(
-            url=api_url,
-            method=Request.Method.post,
-            headers=self.base_headers,
+        copy: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.post,
+            request_type=self.RequestType.COPY_FILE_OR_FOLDER,
         )
-        response: Response = await copy.execute()
-
-        return response.json()
+        return ujson.loads(copy['content'])
     
     async def get_file_in_base64(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FILE_IN_BASE64}'      
-        get_file: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+             
+        get_file: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
+            request_type=self.RequestType.GET_FILE_IN_BASE64,
         )
-        response: Response = await get_file.execute()
-
-        return response.json()
+        return ujson.loads(get_file['content'])
     
     async def get_flat_list(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_FLAT_LIST}'   
-        flat_list: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+           
+        flat_list: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
+            request_type=self.RequestType.GET_FLAT_LIST,
         )
-        response: Response = await flat_list.execute()
-        
-        return response.json()
+        return ujson.loads(flat_list['content'])
     
     async def get_flat_list_ordered_by_date(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}' + \
-                       f'{self.RequestType.GET_FLAT_LIST_ORDER_BY_DATE}'   
-        flat_list: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+          
+        flat_list: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
+            request_type=self.RequestType.GET_FLAT_LIST_ORDER_BY_DATE,
         )
-        response: Response = await flat_list.execute()
-        
-        return response.json()
+        return ujson.loads(flat_list['content'])
     
     async def move_file_or_folder(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.MOVE_FILE_OR_FOLDER}'      
-        move_file: Request = Request(
-            url=api_url,
-            method=Request.Method.post,
-            headers=self.base_headers,
+         
+        move_file: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.post,
+            request_type=self.RequestType.MOVE_FILE_OR_FOLDER,
         )
-        response: Response = await move_file.execute()
-
-        return response.json()
+        return ujson.loads(move_file['content'])
     
     async def get_public_resource_list(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}' + \
-                       f'{self.RequestType.GET_PUBLIC_RESOURCE_LIST}'   
-        public_resource_list: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+           
+        public_resource_list: Response = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
+            request_type=self.RequestType.GET_PUBLIC_RESOURCE_LIST,
         )
-        response: Response = await public_resource_list.execute()
-        
-        return response.json()
+        return ujson.loads(public_resource_list['content'])
     
     async def publish_resource(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
-        api_url: str = f'{self.BASE_URL}{self.RequestType.PUBLISH_RESOURCE}'      
-        publish: Request = Request(
-            url=api_url,
-            method=Request.Method.put,
-            headers=self.base_headers,
+        publish: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.put,
+            request_type=self.RequestType.PUBLISH_RESOURCE,
         )
-        response: Response = await publish.execute()
-
-        return response.json()
+        return ujson.loads(publish['content'])
     
     async def unpublish_resource(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
-        api_url: str = f'{self.BASE_URL}{self.RequestType.UNPUBLISH_RESOURCE}'      
-        unpublish: Request = Request(
-            url=api_url,
-            method=Request.Method.put,
-            headers=self.base_headers,
+        unpublish: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.put,
+            request_type=self.RequestType.UNPUBLISH_RESOURCE,
         )
-        response: Response = await unpublish.execute()
-
-        return response.json()
+        return ujson.loads(unpublish['content'])
     
     async def get_upload_link(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_UPLOAD_LINK}'      
-        get_upload_link: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+              
+        get_upload_link: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
+            request_type=self.RequestType.GET_UPLOAD_LINK,
         )
-        response: Response = await get_upload_link.execute()
-
-        return response.json()
+        return ujson.loads(get_upload_link['content'])
     
     async def upload_from_inet_to_disk(
             self, 
             download_link: str,
             file_name: str) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.UPLOAD_TO_DISK}'   
+           
         params: Dict[str, str] = {
             'url': download_link,
             'path': file_name,
         }
-        upload_file: Request = Request(
-            url=api_url,
-            method=Request.Method.post,
-            headers=self.base_headers,
+        upload_file: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.post,
+            request_type=self.RequestType.UPLOAD_TO_DISK,
         )
-        response: Response = await upload_file.execute()
-        
-        return response.json()
+        return ujson.loads(upload_file['content'])
 
 
 class FilesAndFoldersProcess:
@@ -329,7 +290,7 @@ class FilesAndFoldersProcess:
         
         response: Response = await self.files_and_folders.update_meta_info(
             params=params, 
-            body=body,
+            data=body,
         )
         await self.json.save_result(response)
 
