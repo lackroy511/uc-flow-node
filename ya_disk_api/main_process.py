@@ -56,7 +56,7 @@ class MainProcess:
     
     async def __run_user_disk_process(self) -> None:
         user_disk = UserDisk(
-            self.ya_disk_token,
+            self.json,
         )
         operation: str = self.properties['user_disk_operations']
         
@@ -69,7 +69,7 @@ class MainProcess:
     
     async def __run_files_and_folders_process(self) -> None:
         files_and_folders = FilesAndFolders(
-            self.ya_disk_token,
+            self.json,
         )
         operation: str = self.properties['files_and_folders_operations']
         
@@ -82,7 +82,7 @@ class MainProcess:
         
     async def __run_public_files_and_folders_process(self) -> None:
         public_files_and_folders = PublicFilesAndFolders(
-            self.ya_disk_token,
+            self.json,
         )
         operation: str = self.properties['public_files_and_folders_operations']
         
@@ -95,7 +95,7 @@ class MainProcess:
     
     async def __run_trash_process(self) -> None:
         trash = Trash(
-            self.ya_disk_token,
+            self.json,
         )
         operation: str = self.properties['trash_operations']
         
@@ -108,7 +108,7 @@ class MainProcess:
     
     async def __run_async_operation_process(self) -> None:
         async_operation = AsyncOperation(
-            self.ya_disk_token,
+            self.json,
         )
         operation: str = self.properties['async_operation_operations']
         

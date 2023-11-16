@@ -228,7 +228,7 @@ class FilesAndFolders:
         api_url: str = f'{self.BASE_URL}{self.RequestType.UPLOAD_TO_DISK}'   
         params: Dict[str, str] = {
             'url': download_link,
-            'path': self.BASE_DIR_OF_DISK + file_name,
+            'path': file_name,
         }
         upload_file: Request = Request(
             url=api_url,

@@ -1,3 +1,4 @@
+import ujson
 from typing import Any, Dict
 
 from uc_flow_nodes.schemas import NodeRunContext
@@ -5,35 +6,24 @@ from uc_http_requester.requester import Request
 
 from node.enums import AsyncOpOperations
 from util.dict_formatter import form_dict_to_request
+from ya_disk_api.yandex_disk_api import BaseYaDiskAPI
 
 
-class AsyncOperation:
+class AsyncOperation(BaseYaDiskAPI):
 
-    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/operations/'
-
-    def __init__(self, access_token: str) -> None:
-
-        self.access_token: str = access_token
-        self.base_headers: Dict[str, str] = {
-            'Authorization': f'OAuth {self.access_token}',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
+    base_url = 'https://cloud-api.yandex.net/v1/disk/operations/'
 
     async def get_operation_status(
             self,
             operation_id: str,
             params: Dict[str, str]) -> Dict[str, Any]:
 
-        api_url: str = f'{self.BASE_URL}'
-        get_operation_status: Request = Request(
-            url=api_url + (operation_id if operation_id else ''),
-            method=Request.Method.get,
-            headers=self.base_headers,
+        get_operation_status: Request = await self.make_request(
+            json=self.json,
             params=params,
+            operation_id=operation_id,
         )
-        response = await get_operation_status.execute()
-        return response.json()
+        return ujson.loads(get_operation_status['content'])
 
 
 class AsyncOperationProcess:

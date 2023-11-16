@@ -6,34 +6,20 @@ from uc_http_requester.requester import Request, Response
 
 from node.enums import UserDiskOptions
 from util.dict_formatter import form_dict_to_request
+from ya_disk_api.yandex_disk_api import BaseYaDiskAPI
 
 
-class UserDisk:
+class UserDisk(BaseYaDiskAPI):
     
-    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/'
-    
-    def __init__(self, access_token: str) -> None:
-        
-        self.access_token: str = access_token
-        self.base_headers: Dict[str, str] = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
+    base_url = 'https://cloud-api.yandex.net/v1/disk/'
     
     async def get_meta_info(
             self, 
-            params: Dict[str, str],
-            json: NodeRunContext) -> Dict[str, Any]:
-
-        api_url: str = f'{self.BASE_URL}'   
-        meta_info = await json.requester.request(
-            Request(
-                url=api_url,
-                headers=self.base_headers,
-                method=Request.Method.get,
-                params=params,
-                auth=json.credential_id,
-            ),
+            params: Dict[str, str]) -> Dict[str, Any]:
+  
+        meta_info: Response = await self.make_request(
+            self.json,
+            params,
         )
         
         return ujson.loads(meta_info['content'])
@@ -65,7 +51,7 @@ class UserDiskProcess:
             self.properties['user_disk_params'],
         )
         meta_info: Dict[str, Any] = await self.user_disk.get_meta_info(
-            params, self.json,
+            params,
         )
         
         await self.json.save_result(meta_info)
