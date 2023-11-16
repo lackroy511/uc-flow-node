@@ -1,4 +1,4 @@
-
+import ujson
 from typing import Any, Dict
 
 from uc_flow_nodes.schemas import NodeRunContext
@@ -16,24 +16,27 @@ class UserDisk:
         
         self.access_token: str = access_token
         self.base_headers: Dict[str, str] = {
-            'Authorization': f'OAuth {self.access_token}',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         }
     
     async def get_meta_info(
-            self, params: Dict[str, str]) -> Dict[str, Any]:
-        
+            self, 
+            params: Dict[str, str],
+            json: NodeRunContext) -> Dict[str, Any]:
+
         api_url: str = f'{self.BASE_URL}'   
-        meta_info: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
-            params=params,
+        meta_info = await json.requester.request(
+            Request(
+                url=api_url,
+                headers=self.base_headers,
+                method=Request.Method.get,
+                params=params,
+                auth=json.credential_id,
+            ),
         )
-        response: Response = await meta_info.execute()
         
-        return response.json()
+        return ujson.loads(meta_info['content'])
 
 
 class UserDiskProcess:
@@ -61,6 +64,8 @@ class UserDiskProcess:
         params: Dict[str, Any] = form_dict_to_request(
             self.properties['user_disk_params'],
         )
-        meta_info: Dict[str, Any] = await self.user_disk.get_meta_info(params)
+        meta_info: Dict[str, Any] = await self.user_disk.get_meta_info(
+            params, self.json,
+        )
         
         await self.json.save_result(meta_info)

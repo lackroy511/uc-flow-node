@@ -1,4 +1,5 @@
-from typing import List
+from typing import List, Tuple
+
 
 from uc_flow_nodes.schemas import NodeRunContext
 from uc_flow_nodes.service import NodeService
@@ -7,6 +8,7 @@ from uc_flow_schemas import flow
 from uc_flow_schemas.flow import NodeType as BaseNodeType
 from uc_flow_schemas.flow import RunState
 from uc_http_requester.requester import Request
+from node.credential_type import CredentialType
 
 from node.node_type import NodeType
 
@@ -16,14 +18,17 @@ from ya_disk_api.main_process import MainProcess
 class InfoView(info.Info):
     class Response(info.Info.Response):
         node_type: NodeType
+        credential_types: Tuple[CredentialType] = (CredentialType(),) 
 
 
 class ExecuteView(execute.Execute):
     async def post(self, json: NodeRunContext) -> NodeRunContext:
-        properties = json.node.data.properties
+        
         try:
-            ya_disk_token = properties['api_token']
+            properties = json.node.data.properties
             resource = properties['resource']
+
+            ya_disk_token = None
             
             main_process = MainProcess(
                 ya_disk_token,

@@ -54,15 +54,6 @@ class NodeType(flow.NodeType):
     description: str = 'Yandex Disk API'
     properties: List[Property] = [
         Property(
-            displayName='API token',
-            name='api_token',
-            type=Property.Type.STRING,
-            required=True,
-            default='',
-            description='Токен доступа к апи Ядиска',
-        ),
-        
-        Property(
             displayName='Resource',
             name='resource',
             type=Property.Type.OPTIONS,
@@ -190,4 +181,8 @@ class NodeType(flow.NodeType):
         # async operation/get operation id
         property_operation_id,
         property_get_operation_status_params,
+    ]
+    credentials: List[flow.NodeType.Credential] = [
+        flow.NodeType.Credential(
+            name='yandex_api_oauth2', required=True),
     ]
