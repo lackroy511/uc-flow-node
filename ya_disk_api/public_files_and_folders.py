@@ -1,4 +1,4 @@
-import json as python_json
+import ujson
 from typing import Any, Dict
 
 from uc_flow_nodes.schemas import NodeRunContext
@@ -8,68 +8,48 @@ from node.enums import (FilesAndFoldersOperations,
                         PublicFilesAndFoldersOperations)
 from util.dict_formatter import form_dict_to_request
 from util.file_encoder import download_file
+from ya_disk_api.yandex_disk_api import BaseYaDiskAPI
 
 
-class PublicFilesAndFolders:
+class PublicFilesAndFolders(BaseYaDiskAPI):
     
     class RequestType:
         GET_DOWNLOAD_LINK = 'download'
         SAVE_RESOURCE = 'save-to-disk'
         
-    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/public/resources/'
-    BASE_DIR_OF_DISK = 'disk:/'
-    
-    def __init__(self, access_token: str) -> None:
-        
-        self.access_token: str = access_token
-        
-        self.base_headers: Dict[str, str] = {
-            'Authorization': f'OAuth {self.access_token}',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
+    base_url = 'https://cloud-api.yandex.net/v1/disk/public/resources/'
 
     async def get_meta_info(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
         
-        api_url: str = f'{self.BASE_URL}'   
-        meta_info: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+        meta_info: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
         )
-        response: Response = await meta_info.execute()
-        
-        return response.json()
+        return ujson.loads(meta_info['content'])
 
     async def get_download_link(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.GET_DOWNLOAD_LINK}'   
-        download_link: Request = Request(
-            url=api_url,
-            method=Request.Method.get,
-            headers=self.base_headers,
+           
+        download_link: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.get,
+            request_type=self.RequestType.GET_DOWNLOAD_LINK,
         )
-        response: Response = await download_link.execute()
-
-        return response.json()
+        return ujson.loads(download_link['content'])
     
     async def save_resource(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
-        
-        api_url: str = f'{self.BASE_URL}{self.RequestType.SAVE_RESOURCE}'   
-        download_link: Request = Request(
-            url=api_url,
-            method=Request.Method.post,
-            headers=self.base_headers,
+           
+        save_resource: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.post,
+            request_type=self.RequestType.SAVE_RESOURCE,
         )
-        response: Response = await download_link.execute()
-
-        return response.json()
+        return ujson.loads(save_resource['content'])
 
     
 class PublicFilesAndFoldersProcess:
