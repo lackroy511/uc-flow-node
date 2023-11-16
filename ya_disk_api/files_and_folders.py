@@ -1,3 +1,4 @@
+import ujson
 import json as python_json
 from typing import Any, Dict
 
@@ -7,9 +8,10 @@ from uc_http_requester.requester import Request, Response
 from node.enums import FilesAndFoldersOperations
 from util.dict_formatter import form_dict_to_request
 from util.file_encoder import download_file
+from ya_disk_api.yandex_disk_api import BaseYaDiskAPI
 
 
-class FilesAndFolders:
+class FilesAndFolders(BaseYaDiskAPI):
     
     class RequestType:
         UPLOAD_TO_DISK = 'upload'
@@ -23,29 +25,17 @@ class FilesAndFolders:
         UNPUBLISH_RESOURCE = 'unpublish'
         GET_UPLOAD_LINK = 'upload'
     
-    BASE_URL = 'https://cloud-api.yandex.net/v1/disk/resources/'
-    BASE_DIR_OF_DISK = 'disk:/'
-    
-    def __init__(self, access_token: str) -> None:
-        
-        self.access_token: str = access_token
-        self.base_headers: Dict[str, str] = {
-            'Authorization': f'OAuth {self.access_token}',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
+    base_url = 'https://cloud-api.yandex.net/v1/disk/resources/'
     
     async def del_file_or_folder(
-            self, params: Dict[str, Any]) -> Dict[str, Any]:
+            self, params: Dict[str, Any]) -> Response:
         
-        api_url: str = f'{self.BASE_URL}'   
-        delete: Request = Request(
-            url=api_url,
-            method=Request.Method.delete,
-            headers=self.base_headers,
+        delete: Request = await self.make_request(
+            json=self.json,
             params=params,
+            method=Request.Method.delete,
         )
-        return await delete.execute()
+        return delete
     
     async def get_meta_info(
             self, params: Dict[str, Any]) -> Dict[str, Any]:
@@ -313,10 +303,10 @@ class FilesAndFoldersProcess:
             params,
         )
         
-        if response.status_code == 204:
+        if response['status_code'] == 204:
             await self.json.save_result({'message': 'success'})
         else:
-            await self.json.save_result(response.json())
+            await self.json.save_result(ujson.loads(response['content']))
     
     async def __get_meta_info(self) -> None:
         

@@ -18,8 +18,9 @@ class UserDisk(BaseYaDiskAPI):
             params: Dict[str, str]) -> Dict[str, Any]:
   
         meta_info: Response = await self.make_request(
-            self.json,
-            params,
+            json=self.json,
+            params=params,
+            method=Request.Method.get,
         )
         
         return ujson.loads(meta_info['content'])

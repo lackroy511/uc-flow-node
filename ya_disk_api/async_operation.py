@@ -21,6 +21,7 @@ class AsyncOperation(BaseYaDiskAPI):
         get_operation_status: Request = await self.make_request(
             json=self.json,
             params=params,
+            method=Request.Method.get,
             operation_id=operation_id,
         )
         return ujson.loads(get_operation_status['content'])
