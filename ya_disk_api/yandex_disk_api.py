@@ -45,13 +45,10 @@ class BaseYaDiskAPI:
             request_type: str = None,
             operation_id: str = None) -> str:
         
-        api_url = self.base_url
-        
         if request_type:
-            api_url: str = f'{self.base_url}' + \
-                           f'{request_type if request_type else ""}' 
-        elif operation_id:
-            api_url: str = f'{self.base_url}' + \
-                           f'{operation_id if operation_id else ""}'
+            return f'{self.base_url}{request_type}'
+         
+        if operation_id:
+            return f'{self.base_url}{operation_id}'
         
-        return api_url
+        return self.base_url
